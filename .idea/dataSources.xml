@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2529731526">
+    <data-source source="LOCAL" name="Rails sky: development" uuid="f8299148-6e38-456e-bf9e-bbdf2766ca17">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/sky_development</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfffdfc6dfdedfc3dfc7dfcbdfdedfcf</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails sky: test" uuid="3a5dddda-6d88-4cae-923e-f8da9dffba09">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/sky_test</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfffdfc6dfdedfc3dfc7dfcbdfdedfcf</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails sky: production" uuid="5c919d9c-1c06-435d-9210-44a84d753a81">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/sky_production</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfffdfc6dfdedfc3dfc7dfcbdfdedfcf</user-password>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+
