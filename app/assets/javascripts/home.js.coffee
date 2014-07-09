@@ -3,13 +3,12 @@
 
 Sky = angular.module 'Sky', []
 Sky.config ['$routeProvider', ($routeProvider) ->
-  $routeProvider.when '/post/:postId',  {
+  $routeProvider
+  .when('/post/:postId',  {
     templateUrl: '../assets/home/mainPost.html'
     controller: 'PostCtrl'
-  }
-
-  $routeProvider.otherwise {
+  }).otherwise( {
     templateUrl: '../assets/home/index.html'
     controller: 'IndexCtrl'
-  }
+  })
 ]
