@@ -30,13 +30,13 @@ end
 # gem 'debugger', group: [:development, :test]
 
 # Sky's gems -------------------------------------------------------------------------------------->
-gem 'coffee-rails', '~> 4.0.0'
 gem 'rack-mini-profiler'
 gem 'active_model_serializers'
 gem 'win32console'
 gem 'mysql2'
 gem 'tire'
 
+gem 'coffee-rails', '~> 4.0.0'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'sass-rails', '~> 4.0.2'
 gem 'chunky_png'

@@ -1,15 +1,16 @@
 #= require_self
 #= require_tree ./controllers/home
 
-Sky = angular.module 'Sky', []
-Sky.config ['$routeProvider', ($routeProvider) ->
-  $routeProvider.when '/post/:postId',  {
-    templateUrl: '../assets/home/mainPost.html'
-    controller: 'PostCtrl'
-  }
+window.Sky = angular.module 'Sky', ['ngRoute']
 
-  $routeProvider.otherwise {
+Sky.config ['$routeProvider', ($routeProvider) ->
+  $routeProvider
+  .when('/post/:postId',  {
+    templateUrl: '../assets/home/mainPost.html'
+    controller: 'postCtrl'
+  })
+  .otherwise({
     templateUrl: '../assets/home/index.html'
-    controller: 'IndexCtrl'
-  }
+    controller: 'indexCtrl'
+  })
 ]
