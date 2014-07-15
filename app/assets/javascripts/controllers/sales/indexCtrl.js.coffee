@@ -13,14 +13,17 @@ Sky.salesIndexCtrl = ['$scope', '$routeParams', '$http', 'Product', ($scope, $ro
 
   $scope.currentWarehouse = $scope.warehouses[1].id
   $scope.addItem = (item) ->
-    $scope.product.$save()
-    $scope.products.push item
+    item.$save ->
+      console.log item
+    $scope.products.push angular.copy item
     $scope.product = new Product()
 
-  $scope.removeItem = (index)->
-    $scope.buyList.splice index, 1
-
-  $scope.addToCart = (item) ->
-    $http.post('/products', item).success (data) ->
-      $scope.buyList.push item
+  $scope.removeItem = (item, index) ->
+#    Product.delete(item)
+    Product.delete item
+    $scope.products.splice index, 1
+  $scope.updateItem = (item) ->
+    item.name = $scope.product.name
+    item.price = $scope.product.price
+    Product.update item
 ]

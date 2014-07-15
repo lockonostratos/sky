@@ -15,10 +15,7 @@
 
 window.Sky = angular.module 'Sky', ['ngRoute', 'ngResource', 'ui.bootstrap']
 
-Sky.config ['$routeProvider', '$httpProvider', ($routeProvider, $httpProvider) ->
-  authToken = $("meta[name=\"csrf-token\"]").attr("content")
-  $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = authToken
-
+Sky.config ['$routeProvider', ($routeProvider) ->
   $routeProvider
   .when('/', {
     templateUrl: '../assets/home/index.html'

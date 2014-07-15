@@ -16,7 +16,8 @@
 <span ng-repeat="product in products">
   <h2>
     {{product.name}} <small>{{product.price}}</small>
-    <input type="button" ng-click="addToCart(product)" value="add"/>
+    <input type="button" ng-click="removeItem(product, $index)" value="remove"/>
+    <input type="button" ng-click="updateItem(product)" value="update"/>
   </h2>
 
 </span>
