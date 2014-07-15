@@ -4,13 +4,19 @@
   <option ng-repeat="item in warehouses" value="{{item.id}}">{{item.name}}</option>
 </select>
 <input ng-model="product.name" required/>
-<input ng-model="product.barcode" maxlength="13" type="number" />
+<input ng-model="product.price" maxlength="13" type="number" />
 {{product}}
 <br/>
 <input type="button" value="Submit" ng-show="product.name" ng-click="addItem(product)" />
 
 <h1 ng-repeat="item in buyList">
-  {{item.name}} ({{item.barcode}}) <input type="button" value="x" ng-click="removeItem($index)"/><br/>
+  {{item.name}} ({{item.price}}) <input type="button" value="x" ng-click="removeItem($index)"/><br/>
 </h1>
 
+<span ng-repeat="product in products">
+  <h2>
+    {{product.name}} <small>{{product.price}}</small>
+    <input type="button" ng-click="addToCart(product)" value="add"/>
+  </h2>
 
+</span>
