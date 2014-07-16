@@ -9,10 +9,7 @@
 <br/>
 <input type="button" value="Submit" ng-show="product.name" ng-click="addItem(product)" />
 
-<h1 ng-repeat="item in buyList">
-  {{item.name}} ({{item.price}}) <input type="button" value="x" ng-click="removeItem($index)"/><br/>
-</h1>
-
+{{products}}
 <span ng-repeat="product in products">
   <h2>
     {{product.name}} <small>{{product.price}}</small>

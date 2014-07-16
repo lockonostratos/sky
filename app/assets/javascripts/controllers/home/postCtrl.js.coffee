@@ -7,7 +7,6 @@
 #
 #Sky.controller 'IndexCtrl', ($scope) ->
 
-
 Sky.postCtrl = ['$scope', '$routeParams', ($scope, $routeParams) ->
   $scope.posts = [
     id: 1

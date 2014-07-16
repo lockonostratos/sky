@@ -4,12 +4,16 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = Product.all
-    render json:@products, :root => false
+    render json:@products
   end
 
   # GET /products/1
   # GET /products/1.json
   def show
+    respond_to do |format|
+      format.html { }
+      format.json { render json:@product, status: 201 }
+    end
   end
 
   # GET /products/new
@@ -26,7 +30,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      render json:@products, :root => false, status: 201
+      render json:@products, status: 201
     else
       render {}
     end
@@ -36,7 +40,7 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1.json
   def update
     if @product.update(product_params)
-      render json: @products, :root => false, status: 204
+      render json: @products, status: 204
     else
       render {}
     end
@@ -53,13 +57,14 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
-      params.require(:product).permit(:name, :price)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def product_params
+    params.require(:product).permit(:name, :price)
+  end
+
 end
