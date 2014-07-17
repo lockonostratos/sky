@@ -4,6 +4,9 @@
 @import "mixins";
 @import "components";
 
+body {
+  @include center-gradial(#dad9d9, 100%);
+}
 .application-navigation{
   background-color: #2d2d2d;
 }
@@ -11,3 +14,5 @@
 .main {
   margin-top: 50px;
 }
+
+.no-padding {padding: 0;}
