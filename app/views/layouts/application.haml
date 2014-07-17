@@ -1,5 +1,5 @@
 !!!
-%html{"ng-app"=>"Sky"}
+%html{"ng-app"=>"Sky", "ng-controller"=>"applicationCtrl as application"}
   %head
     %title= content_for?(:title) ? yield(:title) : "EDS"
     %meta{name: 'description', content: "#{content_for?(:description) ? yield(:description) : 'EDS'}"}
@@ -8,7 +8,9 @@
     = yield :styles
     = csrf_meta_tags
   %body
-    %main{id: "application"}
-      = yield
+    .main{}
+      = render 'layouts/header'
+      = render 'layouts/content'
+      = render 'layouts/footer'
     = javascript_include_tag 'application', controller_name
     = yield :scripts

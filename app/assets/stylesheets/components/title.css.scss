@@ -1,0 +1,55 @@
+.tile-container {
+
+  //Sửa lỗi tile group cuối cùng, sẽ không có right-margin!
+  //Chỉ đúng với trường hợp Group này chứa 1 hàng tile mà thôi
+  & > div:last-child {
+    & > .tile {
+      margin-right: 0;
+    }
+  }
+
+  .tile {
+    height: $tile-size;
+    width: $tile-size;
+    margin-right: $tile-space;
+    margin-bottom: $tile-space;
+    background-color: #eee;
+    color: #fff;
+    float: left;
+    position: relative;
+    box-shadow: 0px 0px 1px #FFC inset;
+    cursor: pointer;
+
+    &.double {
+      width: $tile-size * 2 + $tile-space;
+    }
+
+    &.huge {
+      width: $tile-size * 2 + $tile-space;
+      height: $tile-size * 2 + $tile-space;
+    }
+
+    h1, h2, h3, h4, h5, h6, h7, h8, i {
+      color: #fff;
+      margin: 0;
+      tiny { font-size: 30%; }
+      tiny4 { font-size: 40%; }
+      tiny5 { font-size: 50%; }
+      tiny6 { font-size: 60%; }
+      tiny7 { font-size: 70%; }
+    }
+
+    &.orange { @include tile-gradient-background($orange); }
+    &.yellow { @include tile-gradient-background($yellow); }
+    &.blue { @include tile-gradient-background($blue); }
+    &.dark-blue { @include tile-gradient-background($dark-blue); }
+    &.lime { @include tile-gradient-background($lime); }
+    &.green { @include tile-gradient-background($green); }
+    &.light-green { @include tile-gradient-background($light-green); }
+    &.purple { @include tile-gradient-background($purple); }
+    &.pink { @include tile-gradient-background($pink); }
+    &.red { @include tile-gradient-background($red); }
+    &.dark { @include tile-gradient-background($dark); }
+    &.gray { @include tile-gradient-background($gray); }
+  }
+}
