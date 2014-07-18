@@ -6,6 +6,7 @@
 <input ng-model="product.name" required/>
 <input ng-model="product.price" maxlength="13" type="number" />
 {{product}}
+
 <br/>
 <input type="button" value="Submit" ng-show="product.name" ng-click="addItem(product)" />
 
@@ -16,6 +17,165 @@
     <input type="button" ng-click="removeItem(product, $index)" value="remove"/>
     <input type="button" ng-click="updateItem(product)" value="update"/>
   </h2>
+
+<div class="row">
+    <div class="col-lg-2">
+        <select ng-model="currentAccount" ng-change="change_currentAccount(currentAccount)"
+                ng-init="currentAccount = currentAccount || merchant_accounts[0]"
+                ng-options="currentAccount.name group by currentAccount.warehouse_id.name for currentAccount in merchant_accounts">
+        </select>
+
+    </div>
+    <div class="col-lg-4">
+        <select ng-model="current_product_summary" ng-change="change_product_summary(current_product_summary)"
+                ng-init="current_product_summary = current_product_summary || product_summaries[-1]"
+                ng-options="current_product_summary.name for (index ,current_product_summary) in product_summaries">
+            <option value="">-- chọn sản phẩm --</option>
+        </select>
+        <input ng-model="current_product_summary" type="button" value="Thêm(reset)" ng-click="addProductSummary(current_product_summary,true)" ng-disabled="productList.enable_input"/>
+        <input ng-model="current_product_summary" type="button" value="Thêm(next)" ng-click="addProductSummary(current_product_summary,false)" ng-disabled="productList.enable_input"/>
+    </div>
+    <div class="col-lg-6">
+        <input ng-model="current_product_summary.sale_quality" type="number" min="0" ng-disabled="productList.enable_input"
+               ng-change="change_product_summary_sale_quality(current_product_summary)"
+               value="{{current_product_summary.sale_quality}}">
+        <input ng-disabled="true" value='{{current_product_summary.name}} - {{current_product_summary.product_code}}'>
+        <input ng-disabled="true" value='SL:{{current_product_summary.quality}} - {{current_product_summary.price | currency}}'>
+
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-2">
+        <select ng-model="currentCustomer" ng-change="change_currentCustomer(currentCustomer)"
+                ng-init="currentCustomer = currentCustomer || merchant_customers[0]"
+                ng-options="currentCustomer.name for currentCustomer in merchant_customers">
+        </select>
+    </div>
+    <div class="col-lg-10">
+        GiảmGiá%
+        <input ng-model="current_product_summary.discount_percent" type="number" step="5"
+               ng-disabled="productList.enable_input"
+               ng-change="change_product_summary_discount_percent(current_product_summary)"
+               value="{{current_product_summary.discount_percent}}">
+        Tiền Mặt
+        <input ng-model="current_product_summary.discount_cash" type="number" step="100"
+               ng-disabled="productList.enable_input"
+               ng-change="change_product_summary_discount_cash(current_product_summary)"
+               value="{{current_product_summary.discount_cash}}">
+        Tạm Tính
+        <input ng-model="current_product_summary.total_price" type="number" ng-disabled="true"
+               value="{{current_product_summary.total_price | currency}}">
+        Tổng Tiền
+        <input ng-model="current_product_summary.final_price" type="number" ng-disabled="true"
+               value="{{current_product_summary.final_price | currency}}">
+    </div>
+</div>
+
+<div class="row">
+    <table class="table table-condensed table-hover">
+        <thead>
+        <th>ID</th>
+        <th>Mã Kho</th>
+        <th>Skull</th>
+        <th>BarCode</th>
+        <th>Tên</th>
+        <th>Giá</th>
+        <th>Số Lượng</th>
+        <th>Số Lượng Mua</th>
+        <th>Giảm Giá %</th>
+        <th>Giảm Giá Tiền Mặt</th>
+        <th>Tổng Tiền</th>
+
+        </thead>
+        <tr ng-repeat="item in productList.buy_product_list | orderBy:'price'">
+            <td>{{item.id}}</td>
+            <td>{{item.warehouse_id}}</td>
+            <td>{{item.skull_id}}</td>
+            <td>{{item.product_code}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.quality}}</td>
+            <td>{{item.sale_quality}}</td>
+            <td>{{item.discount_percent}}</td>
+            <td>{{item.discount_cash}}</td>
+            <td>{{item.final_price}}</td>
+            <td><input type="button" value="X" ng-click="removeProductSummary(item, $index)"></td>
+        </tr>
+    </table>
+</div>
+<br/>
+<div class="row">
+    <div class="col-lg-2">
+        Phương Thức VC:
+        <select ng-model="delivery"
+                ng-init="delivery = delivery || transports[0]"
+                ng-change="change_current_delivery(delivery)"
+                ng-options="delivery.name for delivery in transports">
+        </select>
+    </div>
+    <div class="col-lg-3">
+        Giảm Giá Voucher <input ng-model="productList.order_summary.voucher" numbers-only
+                               ng-change="change_order_summary_voucher(productList.order_summary.voucher)"
+                               ng-disabled="disable_voucher()"
+                               ng-init="productList.order_summary.voucher = 0"/>
+
+    </div>
+
+    <div class="col-lg-2">
+        Tiền Thu Vào
+        <input numbers-only ng-model="productList.order_summary.money"
+               ng-disabled="productList.enable_input_bill"
+               ng-keydown=""
+               ng-min="15000"
+               ng-mouseleave="change_order_summary_money(productList.order_summary.money)"
+               ng-change=""/>
+    </div>
+    <div class="col-lg-2">
+        Tiền Thối Lại <input ng-model="productList.order_summary.money1"
+                             ng-disabled="true"/>
+    </div>
+    <div class="col-lg-2">
+        Tạm Tính <input ng-model="productList.order_summary.total_price" ng-disabled="true"
+                        ng-init="productList.order_summary.total_price = 0"/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-2">
+        Cách Thanh Toán:
+        <select ng-model="payment_method"
+                ng-init="payment_method = payment_method || payment_methods[0]"
+                ng-change="change_current_payment_method(payment_method)"
+                ng-options="payment_method.name for payment_method in payment_methods">
+        </select>
+    </div>
+    <div class="col-lg-3">
+        Giảm Giá Tiền Theo Tổng Bill :
+        <input type="checkbox" ng-model="productList.order_summary.bill_discount"  ng-change="change_order_summary_bill_discount(productList.order_summary.bill_discount)"  ng-disabled="productList.enable_input_bill" />
+        <input ng-model="current_product_summary" type="button" value="Hoàn Tất"
+               ng-disabled="productList.enable_input_bill"
+               ng-click="addProductSummary(current_product_summary)" />
+
+    </div>
+    <div class="col-lg-2">
+        Giảm Giá %<input ng-model="productList.order_summary.discount_percent_bill"
+                         ng-disabled="!productList.order_summary.bill_discount"/>
+    </div>
+    <div class="col-lg-2">
+        Giảm Giá TM <input ng-model="productList.order_summary.discount_cash_bill"
+                           ng-disabled="!productList.order_summary.bill_discount"/>
+    </div>
+    <div class="col-lg-2">
+        Tổng Tiền <input ng-model="productList.order_summary.final_price" ng-disabled="true"
+                         ng-change="productList.order_summary.money1 = productList.order_summary.money - productList.order_summary.temp_final_price"
+                         ng-init="productList.order_summary.final_price = 0" />
+    </div>
+</div>
+
+<br/>
 
 </span>
 <h1>{{application.name}}</h1>
