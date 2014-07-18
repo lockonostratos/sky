@@ -103,7 +103,7 @@ Sky.salesIndexCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $
   #cập nhật giảm voucher, giảm giá tổng bill
   $scope.change_order_summary_voucher = (item) -> calculation_change_order_summary_voucher(item)
   $scope.change_order_summary_money = (item) -> calculation_change_order_summary_money(item)
-#  $scope.change_order_summary_bill_discount = (item) -> calculation_change_order_summary_bill_discount(item)
+  #  $scope.change_order_summary_bill_discount = (item) -> calculation_change_order_summary_bill_discount(item)
 
 
   #add tạo thông số ban đầu khi chon sản phẩm
@@ -236,7 +236,7 @@ Sky.salesIndexCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $
       $scope.productList.order_summary.money = $scope.productList.order_summary.final_price
       $scope.productList.order_summary.money1 = 0
     if item = 0 then  $scope.productList.order_summary.money1 = 0
-#  calculation_change_order_summary_bill_discount = (item)->
+  #  calculation_change_order_summary_bill_discount = (item)->
 
   calculation_change_buy_product_list = (item)->
     if item == false
@@ -250,7 +250,6 @@ Sky.salesIndexCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $
         $scope.productList.order_summary.discount_percent_bill = 100/($scope.productList.order_summary.total_price/$scope.productList.order_summary.discount_cash_bill)
       $scope.productList.order_summary.final_price = $scope.productList.order_summary.total_price - $scope.productList.order_summary.discount_cash_bill
 
-
   $scope.$watch "productList.order_summary.bill_discount", ->
     $scope.productList.order_summary.discount_cash_bill = 0
     $scope.productList.order_summary.discount_percent_bill = 0
@@ -259,17 +258,4 @@ Sky.salesIndexCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $
       calculation_change_buy_product_list($scope.productList.order_summary.bill_discount)
     else
       $scope.productList.order_summary.final_price = $scope.productList.order_summary.total_price
-
-
-
-
-
-
-
-
-
-
-
-
 ]
-
