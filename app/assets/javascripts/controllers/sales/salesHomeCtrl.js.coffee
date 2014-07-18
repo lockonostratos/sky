@@ -1,4 +1,4 @@
-Sky.controller 'salesHomeController', ['$scope', '$routeParams','$http', ($scope, $routeParams, $http) ->
+Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $http) ->
   $scope.merchant_customers = [
     {
       id: 1
@@ -46,6 +46,7 @@ Sky.controller 'salesHomeController', ['$scope', '$routeParams','$http', ($scope
     }
   ]
   $scope.product_summaries = []
+
   $http.get("/product_summaries.json").success (data)->
     $scope.product_summaries = data
   $scope.productList = {

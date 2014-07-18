@@ -1,10 +1,10 @@
 Sky::Application.routes.draw do
-  resources :products
-  resources :product_summaries
-
   root :to => 'home#index', as: 'home'
+  get 'signin', :to => 'home#signin', as: 'signin'
+
   scope "api" do
     resources :products
+    resources :product_summaries
   end
 
 
