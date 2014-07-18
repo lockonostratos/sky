@@ -1,4 +1,4 @@
-Sky.salesIndexCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $http) ->
+Sky.controller 'salesHomeController', ['$scope', '$routeParams','$http', ($scope, $routeParams, $http) ->
   $scope.merchant_customers = [
     {
       id: 1
