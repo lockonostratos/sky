@@ -1,3 +1,4 @@
+@import "compass";
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
@@ -5,6 +6,10 @@
 @import "variables";
 @import "mixins";
 @import "components";
+
+@import "resolutions/wide";
+@import "resolutions/tablet";
+@import "resolutions/mobile";
 
 a { text-decoration: none !important; }
 
@@ -24,6 +29,13 @@ header {
     height: 50px;
     color: #fff;
     font-size: 20px;
+
+    @include transition-duration(0.25s);
+    @include transition-timing-function(ease);
+
+    @media only screen and (max-width : 992px) {
+      width: $left-pane-collapsed;
+    }
   }
 
   .navbar{
@@ -31,8 +43,13 @@ header {
     border-bottom: 1px solid #e6e6e6;
     margin-left: $left-pane;
     margin-bottom: 0;
-    i, a {
-      color: #5e5e5e;
+    i, a { color: #5e5e5e; }
+
+    @include transition-duration(0.25s);
+    @include transition-timing-function(ease);
+
+    @media only screen and (max-width : 992px) {
+      margin-left: $left-pane-collapsed;
     }
   }
 
@@ -56,12 +73,25 @@ header {
   width: $left-pane;
   box-shadow: inset 4px 0 0 0 #191919;
   min-height: 100%;
+
+  @include transition-duration(0.25s);
+  @include transition-timing-function(ease);
+
+  @media only screen and (max-width : 992px) {
+    width: $left-pane-collapsed;
+    .sidebar-menu > li > a > span {
+      display: none;
+    }
+  }
 }
 
 .right-side {
   margin-left: $left-pane;
-  .main {
+  @include transition-duration(0.25s);
+  @include transition-timing-function(ease);
 
+  @media only screen and (max-width : 992px) {
+    margin-left: $left-pane-collapsed;
   }
 }
 
@@ -78,7 +108,11 @@ header {
       text-transform: uppercase;
       padding: 13px 15px;
       display: block;
-      > i { width: 20px; }
+      > i { width: 20px;
+        @media only screen and (max-width : 992px) {
+          font-size: 18px;
+        }
+      }
     }
     &.active > a, &:hover > a {
       color: #f6f6f6;
