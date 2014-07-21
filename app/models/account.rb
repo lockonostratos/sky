@@ -61,7 +61,7 @@ class Account < ActiveRecord::Base
     new_merchant = Merchant.create! ({owner_id: self.id, name: self.email})
     self.update({headquater: new_merchant.id}) #Xác định xem người này trực thuộc tổ chức nào?
     new_branch = Branch.create! ({merchant_id: new_merchant.id, name: 'TRỤ SỞ'})
-    new_merchant.update! ({headquater_id: new_branch.id})
+    new_merchant.update! ({headquater: new_branch.id})
     new_warehouse = Warehouse.find_by_branch_id(new_branch.id)
     MerchantAccount.create! ({account_id: self.id,
                               merchant_id: new_merchant.id,

@@ -1,4 +1,4 @@
-Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $http) ->
+Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'ProductSummary', ($scope, $routeParams, $http, ProductSummary) ->
   $scope.merchant_customers = [
     {
       id: 1
@@ -47,8 +47,32 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $h
   ]
   $scope.product_summaries = []
 
-  $http.get("/product_summaries.json").success (data)->
+#  $http.get("/api/product_summaries.json").success (data)->
+#    $scope.product_summaries = data
+
+  $scope.product = new Product()
+  ProductSummary.query().then (data) ->
     $scope.product_summaries = data
+#
+#  $scope.addItem = (item) ->
+#    item.create()
+#    $scope.products.push angular.copy item
+#    $scope.product = new Product()
+#
+#  $scope.removeItem = (item, index) ->
+##    Product.delete(item)
+#    item.delete()
+#    $scope.products.splice index, 1
+#
+#  $scope.updateItem = (item) ->
+#    item.name = $scope.product.name
+#    item.price = $scope.product.price
+#    item.update()
+
+
+
+
+
   $scope.productList = {
     enable_input: true
     enable_input_bill: true
@@ -79,6 +103,35 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $h
       temp_final_price:0
       total_price: 0 #tổng tiền bill chưa trừ giảm giá
       final_price:0 #tổng tiền bill trừ giảm giá
+
+
+
+#      merchant_account: Zeprj.request 'account:entities'
+#      merchant_customer: Zeprj.request 'customer:entities'
+#      merchant_customer_new: new Backbone.Model
+#      bill_code: new Backbone.Model
+#        bill_code:'123456'
+#      bill_print_show: ''
+#      delivery_code: ''
+#      product_search: new Backbone.Collection
+#      product_select: new Backbone.Model
+#      product_summary: new Backbone.Collection
+#      order_summary: new Backbone.Model
+#        TotalPrice: 0
+#        TotalQuality:0
+#        TotalDiscount:0
+#        Discount:0
+#        warehouse_id:1
+#        merchant_account_id:''
+#        customer_id:1
+#        name:'Sang'
+#        delivery:0
+#        total_price:0
+#        deposit:0
+#        discount_cash:0
+#        final_price:0
+#        payment_method:0
+#        status:0
     }
   }
   #cập nhật khi thay đổi người mua và người bán
@@ -148,7 +201,6 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $h
       $scope.productList.buy_product_list.push new_item
     $scope.productList.order_summary.total_price += new_item.total_price
     $scope.productList.order_summary.final_price += new_item.final_price
-    $scope.productList.order_summary.money += new_item.final_price
     $scope.productList.order_summary.temp_final_price += new_item.final_price
     $scope.productList.enable_input_bill = false
     # hiện số sản phẩm còn bán được trong kho
@@ -189,6 +241,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $h
     calculation_change_product_summary($scope.current_product_summary)
     #cập nhật vào tổng bill
     calculation_change_buy_product_list($scope.productList.order_summary.bill_discount)
+
   #cập nhật số tiền khi số lượng mua thay đổi-------------------------------------------------------------------------->
   calculation_change_product_summary_sale_quality= (item)->
     $scope.productList.order_summary.temp = 0
@@ -203,6 +256,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $h
       item.total_price =  0
       item.final_price = 0
       item.discount_percent = 0
+
   #cập nhật số tiền khi giảm giá phần trăm thay đổi
   calculation_change_product_summary_discount_percent = (item)->
     if item.discount_percent == undefined || item.discount_percent <= 0  then item.discount_percent = 0
@@ -210,6 +264,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $h
     item.total_price = item.sale_quality * item.price
     item.discount_cash = (item.discount_percent * item.price * item.sale_quality)/100
     item.final_price = item.sale_quality * item.price - item.discount_cash
+
   #cập nhật số tiền khi giảm giá tiền mặt thay đổi
   calculation_change_product_summary_discount_cash = (item)->
     if item.discount_cash == undefined || item.discount_cash <= 0
@@ -219,6 +274,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $h
     if item.discount_cash > item.total_price then item.discount_cash = item.total_price
     item.discount_percent = (item.discount_cash * 100)/item.total_price
     item.final_price = item.sale_quality * item.price - item.discount_cash
+
   #cập nhật số tiền tổng Bill khi giảm giá Vocher thay đổi------------------------------------------------------------->
   calculation_change_order_summary_voucher = (item)->
     if item >  $scope.productList.order_summary.temp_final_price
@@ -231,13 +287,13 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', ($scope, $routeParams, $h
     if $scope.productList.order_summary.money < $scope.productList.order_summary.final_price
       $scope.productList.order_summary.money = $scope.productList.order_summary.final_price
     $scope.productList.order_summary.money1 = $scope.productList.order_summary.money - $scope.productList.order_summary.final_price
+
   #câp nhật tiền tổng bill theo tiền thu vào khách hàng
   calculation_change_order_summary_money = (item)->
     if item <= $scope.productList.order_summary.final_price
       $scope.productList.order_summary.money = $scope.productList.order_summary.final_price
       $scope.productList.order_summary.money1 = 0
     if item = 0 then  $scope.productList.order_summary.money1 = 0
-  #  calculation_change_order_summary_bill_discount = (item)->
 
   calculation_change_buy_product_list = (item)->
     if item == false

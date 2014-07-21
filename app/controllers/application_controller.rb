@@ -23,6 +23,6 @@ class ApplicationController < ActionController::Base
   end
 
   def check_account_permission
-    redirect_to signin_path unless !current_account
+    redirect_to signin_path unless current_account
   end
 end

@@ -422,9 +422,9 @@ ActiveRecord::Schema.define(version: 20140711100003) do
   end
 
   create_table "merchants", force: true do |t|
-    t.integer  "headquater_id", default: 0, null: false
-    t.integer  "owner_id",                  null: false
-    t.string   "name",                      null: false
+    t.integer  "headquater", default: 0, null: false
+    t.integer  "owner_id",               null: false
+    t.string   "name",                   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
