@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.4'
+gem 'rails', '4.1.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -45,5 +45,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'eco'
 
+gem 'tzinfo-data'
+gem 'enumerize'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bcrypt-ruby', '~> 3.1.2'

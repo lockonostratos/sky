@@ -14,8 +14,8 @@ Sky.config ['$routeProvider', ($routeProvider) ->
       templateUrl: '../assets/home/index.html'
       controller: 'Sky.indexCtrl'
     }).when('/sales', {
-      templateUrl: '../assets/sales/index.html'
-      controller: 'Sky.salesIndexCtrl'
+      templateUrl: '../assets/sales/home.html'
+      controller: 'Sky.salesHomeCtrl'
       controllerAs: 'root'
     }).when('/post/:postId',  {
       templateUrl: '../assets/home/post.html'

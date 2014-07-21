@@ -1,0 +1,2 @@
+class GeraAccountController < ApplicationController
+end
