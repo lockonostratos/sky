@@ -1,0 +1,35 @@
+<%= simple_form_for(@order) do |f| %>
+  <%= f.error_notification %>
+  <%= f.hidden_field :id %>
+  <div class="form-inputs">
+
+    <%= f.input :branch_id %>
+
+    <%= f.input :warehouse_id %>
+
+    <%= f.input :merchant_account_id %>
+
+    <%= f.input :customer_id %>
+
+    <%= f.input :return %>
+
+    <%= f.input :delivery %>
+
+    <%= f.input :total_price %>
+
+    <%= f.input :deposit %>
+
+    <%= f.input :discount_cash %>
+
+    <%= f.input :final_price %>
+
+    <%= f.input :payment_method %>
+
+    <%= f.input :status %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -330,6 +330,7 @@ class InitializeDatabase < ActiveRecord::Migration
       t.string :name
       t.boolean :return, :null => false, :default => false #Id don tra hang (neu co)
       t.boolean :delivery,:null => false, :default =>false #true có giao hàng, false ko co giao hàng
+      t.boolean :bill_discount, :default => false #cách tích giảm giá hóa đơn, false lấy theo từng sp, true lấy theo tổng hóa đơn
 
       t.decimal :total_price, :null => false #tong gia tri hoa don
       t.decimal :deposit, :null => false, :default=>0 #tra truoc
@@ -347,9 +348,6 @@ class InitializeDatabase < ActiveRecord::Migration
       t.belongs_to :order, :null => false
       t.string :name
       t.belongs_to :product, :null => false
-      t.string :product_code, :null => false
-      t.integer :skull_id, :null => false
-
       t.integer :quality, :null => false
       t.integer :return_quality, :null => false, :default => 0
       t.decimal :price, :null => false

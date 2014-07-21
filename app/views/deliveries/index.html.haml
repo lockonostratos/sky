@@ -1,0 +1,39 @@
+%h1 Listing deliveries
+
+%table
+  %tr
+    %th Order
+    %th Merchant account
+    %th Success
+    %th Creation date
+    %th Delivery date
+    %th Delivery address
+    %th Contact name
+    %th Contact phone
+    %th Transportation fee
+    %th Comment
+    %th Status
+    %th
+    %th
+    %th
+
+  - @deliveries.each do |delivery|
+    %tr
+      %td= delivery.order_id
+      %td= delivery.merchant_account_id
+      %td= delivery.success
+      %td= delivery.creation_date
+      %td= delivery.delivery_date
+      %td= delivery.delivery_address
+      %td= delivery.contact_name
+      %td= delivery.contact_phone
+      %td= delivery.transportation_fee
+      %td= delivery.comment
+      %td= delivery.status
+      %td= link_to 'Show', delivery
+      %td= link_to 'Edit', edit_delivery_path(delivery)
+      %td= link_to 'Destroy', delivery, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Delivery', new_delivery_path

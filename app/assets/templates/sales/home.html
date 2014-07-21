@@ -1,23 +1,3 @@
-<input ng-model="message"/>
-<h1>{{message}}</h1>
-<select ng-model="currentWarehouse" ng-change="logWarehouse()">
-  <option ng-repeat="item in warehouses" value="{{item.id}}">{{item.name}}</option>
-</select>
-<input ng-model="product.name" required/>
-<input ng-model="product.price" maxlength="13" type="number" />
-{{product}}
-
-<br/>
-<input type="button" value="Submit" ng-show="product.name" ng-click="addItem(product)" />
-
-{{products}}
-<span ng-repeat="product in products">
-  <h2>
-    {{product.name}} <small>{{product.price}}</small>
-    <input type="button" ng-click="removeItem(product, $index)" value="remove"/>
-    <input type="button" ng-click="updateItem(product)" value="update"/>
-  </h2>
-</span>
 <div class="row">
     <div class="col-lg-2">
         <select ng-model="currentAccount" ng-change="change_currentAccount(currentAccount)"
@@ -26,7 +6,7 @@
         </select>
 
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         <select ng-model="current_product_summary" ng-change="change_product_summary(current_product_summary)"
                 ng-init="current_product_summary = current_product_summary || product_summaries[-1]"
                 ng-options="current_product_summary.name for (index ,current_product_summary) in product_summaries">
@@ -39,7 +19,7 @@
         <input ng-model="current_product_summary.sale_quality" type="number" min="0" ng-disabled="productList.enable_input"
                ng-change="change_product_summary_sale_quality(current_product_summary)"
                value="{{current_product_summary.sale_quality}}">
-        <input ng-disabled="true" value='{{current_product_summary.name}} - {{current_product_summary.product_code}}'>
+        <input ng-disabled="true" value='{{current_product_summary.name}} - {{current_product_summary.productCode}}'>
         <input ng-disabled="true" value='SL:{{current_product_summary.quality}} - {{current_product_summary.price | currency}}'>
 
     </div>
@@ -74,13 +54,12 @@
                value="{{current_product_summary.final_price | currency}}">
     </div>
 </div>
-
 <div class="row">
     <table class="table table-condensed table-hover">
         <thead>
         <th>ID</th>
         <th>Mã Kho</th>
-        <th>Skull</th>`
+        <th>Skull</th>
         <th>BarCode</th>
         <th>Tên</th>
         <th>Giá</th>
@@ -93,9 +72,9 @@
         </thead>
         <tr ng-repeat="item in productList.buy_product_list | orderBy:'price'">
             <td>{{item.id}}</td>
-            <td>{{item.warehouse_id}}</td>
-            <td>{{item.skull_id}}</td>
-            <td>{{item.product_code}}</td>
+            <td>{{item.warehouseId}}</td>
+            <td>{{item.skullId}}</td>
+            <td>{{item.productCode}}</td>
             <td>{{item.name}}</td>
             <td>{{item.price}}</td>
             <td>{{item.quality}}</td>
@@ -154,18 +133,20 @@
     </div>
     <div class="col-lg-3">
         Giảm Giá Tiền Theo Tổng Bill :
-        <input type="checkbox" ng-model="productList.order_summary.bill_discount"  ng-change="change_order_summary_bill_discount(productList.order_summary.bill_discount)"  ng-disabled="productList.enable_input_bill" />
-        <input ng-model="current_product_summary" type="button" value="Hoàn Tất"
+        <input type="checkbox" ng-model="productList.order_summary.bill_discount" ng-disabled="productList.enable_input_bill" />
+        <input ng-model="productList" type="button" value="Hoàn Tất"
                ng-disabled="productList.enable_input_bill"
-               ng-click="addProductSummary(current_product_summary)" />
+               ng-click="finishProductSummary(productList)" />
 
     </div>
     <div class="col-lg-2">
-        Giảm Giá %<input ng-model="productList.order_summary.discount_percent_bill"
+        Giảm Giá %<input ng-model="productList.order_summary.discount_percent_bill" type="number"
+                         ng-change="change_order_summary_bill_discount_percent(productList.order_summary.discount_percent_bill)"
                          ng-disabled="!productList.order_summary.bill_discount"/>
     </div>
     <div class="col-lg-2">
-        Giảm Giá TM <input ng-model="productList.order_summary.discount_cash_bill"
+        Giảm Giá TM <input ng-model="productList.order_summary.discount_cash" type="number" step="{{productList.order_summary.temp_final_price/100}}"
+                           ng-change="change_order_summary_bill_discount_cash(productList.order_summary.discount_cash)"
                            ng-disabled="!productList.order_summary.bill_discount"/>
     </div>
     <div class="col-lg-2">

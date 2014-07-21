@@ -6,7 +6,7 @@ class DeliveriesController < MerchantApplicationController
   def index
     @deliveries = Delivery.where(order_id: all_order_on_merchant(current_merchant_account.merchant_id))
     respond_to do |format|
-      format.html
+      format.html { render layout: "account" }
       format.json { render :json => @deliveries}
     end
   end

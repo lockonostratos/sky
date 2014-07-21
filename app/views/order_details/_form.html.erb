@@ -1,0 +1,23 @@
+<%= simple_form_for(@order_detail) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+    <%= f.input :order_id %>
+
+    <%= f.input :product_id %>
+
+    <%= f.input :quality %>
+
+    <%= f.input :return_quality %>
+
+    <%= f.input :price %>
+
+    <%= f.input :discount_cash %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

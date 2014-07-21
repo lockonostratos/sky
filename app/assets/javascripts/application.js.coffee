@@ -24,3 +24,5 @@ Sky.config ['$routeProvider', ($routeProvider) ->
       templateUrl: '../assets/common/404.html'
     })
 ]
+
+Sky.gs = (name) -> angular.element(document.body).injector().get(name)

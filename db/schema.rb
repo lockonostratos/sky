@@ -451,8 +451,6 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.integer  "order_id",                                              null: false
     t.string   "name"
     t.integer  "product_id",                                            null: false
-    t.string   "product_code",                                          null: false
-    t.integer  "skull_id",                                              null: false
     t.integer  "quality",                                               null: false
     t.integer  "return_quality",                            default: 0, null: false
     t.decimal  "price",            precision: 10, scale: 0,             null: false
@@ -471,6 +469,7 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.string   "name"
     t.boolean  "return",                                       default: false, null: false
     t.boolean  "delivery",                                     default: false, null: false
+    t.boolean  "bill_discount",                                default: false
     t.decimal  "total_price",         precision: 10, scale: 0,                 null: false
     t.decimal  "deposit",             precision: 10, scale: 0, default: 0,     null: false
     t.decimal  "discount_voucher",    precision: 10, scale: 0, default: 0,     null: false

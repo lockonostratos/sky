@@ -6,7 +6,7 @@ class ProductSummariesController < MerchantApplicationController
   def index
     @product_summaries = ProductSummary.where(warehouse_id:current_merchant_account.current_warehouse_id)
     respond_to do |format|
-      format.html
+      format.html { render layout: "account" }
       format.json {render json: @product_summaries}
     end
   end
@@ -33,7 +33,7 @@ class ProductSummariesController < MerchantApplicationController
   # GET /product_summaries/1.json
   def show
     respond_to do |format|
-      format.html
+      format.html { render layout: "account" }
       format.json {render json: @product_summary , :include => :skull}
     end
   end
@@ -59,6 +59,10 @@ class ProductSummariesController < MerchantApplicationController
 
   # GET /product_summaries/1/edit
   def edit
+    respond_to do |format|
+      format.html { render layout: "account" }
+      format.json {render json: @product_summarie}
+    end
   end
 
   # POST /product_summaries

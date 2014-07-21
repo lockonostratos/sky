@@ -8,6 +8,12 @@ Sky::Application.routes.draw do
   scope "api" do
     resources :products
     resources :product_summaries
+    resources :orders
+    resources :order_details
+    resources :deliveries
+    resources :accounts
+    resources :merchant_accounts
+
   end
 
 

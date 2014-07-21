@@ -6,7 +6,7 @@ class OrderDetailsController < ApplicationController
   def index
     @order_details = OrderDetail.all
     respond_to do |format|
-      format.html
+      format.html { render layout: "account" }
       format.json { render :json => @order_details }
     end
   end

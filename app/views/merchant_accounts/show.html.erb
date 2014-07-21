@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @merchant_account.account_id %>
+</p>
+
+<p>
+  <strong>Merchant:</strong>
+  <%= @merchant_account.merchant_id %>
+</p>
+
+<p>
+  <strong>Branch:</strong>
+  <%= @merchant_account.branch_id %>
+</p>
+
+<p>
+  <strong>Current warehouse:</strong>
+  <%= @merchant_account.current_warehouse_id %>
+</p>
+
+<%= link_to 'Edit', edit_merchant_account_path(@merchant_account) %> |
+<%= link_to 'Back', merchant_accounts_path %>

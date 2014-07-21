@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Branch:</strong>
+  <%= @order.branch_id %>
+</p>
+
+<p>
+  <strong>Warehouse:</strong>
+  <%= @order.warehouse_id %>
+</p>
+
+<p>
+  <strong>Merchant account:</strong>
+  <%= @order.merchant_account_id %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @order.customer_id %>
+</p>
+
+<p>
+  <strong>Return:</strong>
+  <%= @order.return %>
+</p>
+
+<p>
+  <strong>Delivery:</strong>
+  <%= @order.delivery %>
+</p>
+
+<p>
+  <strong>Total price:</strong>
+  <%= @order.total_price %>
+</p>
+
+<p>
+  <strong>Deposit:</strong>
+  <%= @order.deposit %>
+</p>
+
+<p>
+  <strong>Discount cash:</strong>
+  <%= @order.discount_cash %>
+</p>
+
+<p>
+  <strong>Final price:</strong>
+  <%= @order.final_price %>
+</p>
+
+<p>
+  <strong>Payment method:</strong>
+  <%= @order.payment_method %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @order.status %>
+</p>
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>

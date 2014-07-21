@@ -1,0 +1,1 @@
+json.extract! @delivery, :id, :order_id, :merchant_account_id, :success, :creation_date, :delivery_date, :delivery_address, :contact_name, :contact_phone, :transportation_fee, :comment, :status, :created_at, :updated_at

@@ -1,0 +1,39 @@
+%p#notice= notice
+
+%p
+  %b Order:
+  = @delivery.order_id
+%p
+  %b Merchant account:
+  = @delivery.merchant_account_id
+%p
+  %b Success:
+  = @delivery.success
+%p
+  %b Creation date:
+  = @delivery.creation_date
+%p
+  %b Delivery date:
+  = @delivery.delivery_date
+%p
+  %b Delivery address:
+  = @delivery.delivery_address
+%p
+  %b Contact name:
+  = @delivery.contact_name
+%p
+  %b Contact phone:
+  = @delivery.contact_phone
+%p
+  %b Transportation fee:
+  = @delivery.transportation_fee
+%p
+  %b Comment:
+  = @delivery.comment
+%p
+  %b Status:
+  = @delivery.status
+
+= link_to 'Edit', edit_delivery_path(@delivery)
+\|
+= link_to 'Back', deliveries_path
