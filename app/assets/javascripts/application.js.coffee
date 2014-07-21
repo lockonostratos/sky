@@ -2,11 +2,11 @@
 #= require lazy
 #= require angular
 #= require angular-route
-# require angular-resource
+#= require angular-animate
 #= require angularjs-rails-resource
 #= require ui-bootstrap
 
-window.Sky = angular.module 'Sky', ['ngRoute', 'rails', 'ui.bootstrap']
+window.Sky = angular.module 'Sky', ['ngRoute', 'rails', 'ui.bootstrap', 'ngAnimate']
 
 Sky.config ['$routeProvider', ($routeProvider) ->
   $routeProvider

@@ -1,9 +1,20 @@
 <header ng-controller="headerCtrl as header">
-  <nav class="application-navigation navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-      <ul class="nav navbar-nav" ng-repeat="item in application.navs">
-        <li><a href="#{{item.url}}">{{item.title}}</a></li>
-      </ul>
+  <a href="#" class="logo">
+    EDS
+  </a>
+  <nav class="navbar navbar-static-top" role="navigation">
+    <a href="" class="navbar-brand sidebar-toggle">
+      <i class="fa fa-bars"></i>
+    </a>
+
+    <div class="navbar-form">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="tìm kiếm">
+      </div>
     </div>
+
+    <ul class="nav navbar-nav" ng-repeat="item in application.navs">
+      <li><a href="#{{item.url}}">{{item.title}}</a></li>
+    </ul>
   </nav>
 </header>

@@ -12,5 +12,6 @@
       = render 'layouts/header'
       = render 'layouts/content'
       -#= render 'layouts/footer'
+      = yield
     = javascript_include_tag 'application', controller_name
     = yield :scripts

@@ -142,6 +142,7 @@
     <orderEntry type="library" scope="PROVIDED" name="erubis (v2.7.0, ruby-1.9.3-p484) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="execjs (v2.2.1, ruby-1.9.3-p484) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.9.3, ruby-1.9.3-p484) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="font-awesome-rails (v4.1.0.0, ruby-1.9.3-p484) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="haml (v4.0.5, ruby-1.9.3-p484) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="haml-rails (v0.5.3, ruby-1.9.3-p484) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hashr (v0.0.22, ruby-1.9.3-p484) [gem]" level="application" />
@@ -178,7 +179,7 @@
     <orderEntry type="library" scope="PROVIDED" name="turbolinks (v2.2.2, ruby-1.9.3-p484) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tzinfo (v1.2.1, ruby-1.9.3-p484) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tzinfo-data (v1.2014.5, ruby-1.9.3-p484) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="uglifier (v2.5.1, ruby-1.9.3-p484) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="uglifier (v2.5.3, ruby-1.9.3-p484) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="win32console (v1.3.2, ruby-1.9.3-p484) [gem]" level="application" />
   </component>
   <component name="RModuleSettingsStorage">

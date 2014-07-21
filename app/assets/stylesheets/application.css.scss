@@ -1,18 +1,62 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome";
 @import "theme";
+@import "variables";
 @import "mixins";
 @import "components";
 
 body {
-  @include center-gradial(#dad9d9, 100%);
-}
-.application-navigation{
-  background-color: #2d2d2d;
+//  @include center-gradial(#dad9d9, 100%);
 }
 
-.main {
-  margin-top: 50px;
+header {
+  position: fixed;
+  z-index: 1001;
+  display: block;
+  top: 0; right: 0; left: 0;
+
+  .logo {
+    float: left;
+    width: $left-pane;
+    height: 50px;
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+  }
+
+  .navbar{
+    background-color: #fff;
+    border-bottom: 1px solid #e6e6e6;
+    margin-left: $left-pane;
+    margin-bottom: 0;
+    i, a {
+      color: #5e5e5e;
+    }
+  }
+}
+
+.wrapper {
+  width: 100%;
+}
+
+.left-side, .right-side {
+  padding-top: 50px;
+  display: block;
+}
+
+.left-side {
+  position: fixed;
+  background: #253646;
+  width: $left-pane;
+  min-height: 100%;
+}
+
+.right-side {
+  margin-left: $left-pane;
+  .main {
+
+  }
 }
 
 .no-padding {padding: 0;}
