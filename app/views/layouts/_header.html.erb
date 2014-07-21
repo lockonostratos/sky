@@ -3,18 +3,27 @@
     EDS
   </a>
   <nav class="navbar navbar-static-top" role="navigation">
-    <a href="" class="navbar-brand sidebar-toggle">
-      <i class="fa fa-bars"></i>
+    <a href="#" class="navbar-brand sidebar-toggle" tooltip-placement="bottom" tooltip="tool tip!!">
+      <i class="fa fa-align-justify"></i>
     </a>
 
-    <div class="navbar-form">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="tìm kiếm">
+    <div class="navbar-form navbar-left search-form" role="search">
+      <div class="input-group">
+        <input type="text" class="form-control search-box" placeholder="tìm sản phẩm, nhân sự, tổ chức...">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+        </span>
       </div>
     </div>
 
     <ul class="nav navbar-nav" ng-repeat="item in application.navs">
       <li><a href="#{{item.url}}">{{item.title}}</a></li>
     </ul>
+
+    <div class="navbar-right">
+      <ul class="nav navbar-nav">
+        <li></li>
+      </ul>
+    </div>
   </nav>
 </header>
