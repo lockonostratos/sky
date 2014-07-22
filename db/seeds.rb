@@ -66,11 +66,11 @@ product_ThuocSau = Product.create({ product_code: '1234567891014', skull_id: sku
 #4.Tạo ProductSummary
 product_summary_AoThung = ProductSummary.create({product_code: '1234567891011', skull_id: skull_ao.id, warehouse_id: khoDongThap.id,
                                                 merchant_account_id:loc_mer_acc.id, name: 'Áo Thung', quality:100, price:50000})
-product_summary_Bia333 = ProductSummary.create({product_code: '1234567891012', skull_id: skull_ao.id, warehouse_id: khoDongThap.id,
+product_summary_Bia333 = ProductSummary.create({product_code: '1234567891012', skull_id: skull_chai.id, warehouse_id: khoDongThap.id,
                                                  merchant_account_id:loc_mer_acc.id, name: 'Bia 333', quality:150, price:250000})
-product_summary_BiaTiger = ProductSummary.create({product_code: '1234567891013', skull_id: skull_ao.id, warehouse_id: khoDongThap.id,
+product_summary_BiaTiger = ProductSummary.create({product_code: '1234567891013', skull_id: skull_ket.id, warehouse_id: khoDongThap.id,
                                                  merchant_account_id:loc_mer_acc.id, name: 'Bia Tiger', quality:10, price:350000})
-product_summary_ThuocSau = ProductSummary.create({product_code: '1234567891014', skull_id: skull_ao.id, warehouse_id: khoDongThap.id,
+product_summary_ThuocSau = ProductSummary.create({product_code: '1234567891014', skull_id: skull_thung.id, warehouse_id: khoDongThap.id,
                                                  merchant_account_id:loc_mer_acc.id, name: 'Thuốc Sâu', quality:50, price:750000})
 
 

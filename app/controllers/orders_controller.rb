@@ -77,28 +77,23 @@ class OrdersController < MerchantApplicationController
     #     Nếu [dilivery=false] thì trừ cả 2 khả dĩ [available_quality] và thực tế [instock_quality]
     #   Bởi vì hàng bán ra thực tế nằm trong bản [stock] không phải [stockSummary] nên, phải *trừ theo đợt
     #   (ví dụ có 2 đợt nhập cùng sản phẩm - và số lượng bán vượt qua một đợt thì sẽ phải trừ cả 2 đợt để cho đủ số sản phẩm)
-     if @current_order.bill_discount == false
-        selling_stock.each do |item|
-        stocking_items = Product.where(product_code: item['product_code'], skull_id:item['skull_id'], warehouse_id: item['warehouse_id']).where('available_quality > ?', 0)
-        #Trừ số lượng sản phẩm trong bảng Product
-        subtract_quality_on_sale stocking_items, item, @current_order, @current_order.delivery, @current_order.bill_discount
-        #4.Cập nhật hóa đơn.
-        #   1.Thêm các record vào bảng [OrderDetails] với id của hóa đơn đang tạo! (tức là thêm chi tiết vào cho hóa đơn)
-        #   2.Cập nhật các số liệu khác: tổng tiền, giảm giá...
-        @current_order.discount_cash += item['discount_cash']
-        @current_order.total_price += item['price'] * item['sale_quality']
-        @current_order.final_price = @current_order.total_price - (@current_order.deposit + @current_order.discount_cash)
-        end
-     else
-       selling_stock.each do |item|
-         stocking_items = Product.where(product_code: item['product_code'], skull_id:item['skull_id'], warehouse_id: item['warehouse_id']).where('available_quality > ?', 0)
-         subtract_quality_on_sale stocking_items, item, @current_order, @current_order.delivery, @current_order.bill_discount
-       end
-       metro_summary = MetroSummary.find_by_warehouse_id(@current_order.warehouse_id)
-       metro_summary.revenue -= @current_order.discount_cash  if @current_order.delivery == false
-       metro_summary.revenue_day -= @current_order.discount_cash if @current_order.delivery == false
-       metro_summary.revenue_month -= @current_order.discount_cash if @current_order.delivery == false
-     end
+    selling_stock.each do |item|
+    stocking_items = Product.where(product_code: item['product_code'], skull_id:item['skull_id'], warehouse_id: item['warehouse_id']).where('available_quality > ?', 0)
+    #Trừ số lượng sản phẩm trong bảng Product
+    subtract_quality_on_sale stocking_items, item, @current_order, @current_order.delivery, @current_order.bill_discount
+    #4.Cập nhật hóa đơn.
+    #   1.Thêm các record vào bảng [OrderDetails] với id của hóa đơn đang tạo! (tức là thêm chi tiết vào cho hóa đơn)
+    #   2.Cập nhật các số liệu khác: tổng tiền, giảm giá...
+    # @current_order.discount_cash += item['discount_cash']
+    # @current_order.total_price += item['price'] * item['sale_quality']
+    # @current_order.final_price = @current_order.total_price - (@current_order.deposit + @current_order.discount_cash)
+    end
+    #Cập nhật và bảng Summary
+    metro_summary = MetroSummary.find_by_warehouse_id(@current_order.warehouse_id)
+    metro_summary.revenue -= @current_order.discount_cash  if @current_order.delivery == false
+    metro_summary.revenue_day -= @current_order.discount_cash if @current_order.delivery == false
+    metro_summary.revenue_month -= @current_order.discount_cash if @current_order.delivery == false
+
 
 
     #Tạo phiếu giao hàng
@@ -194,24 +189,25 @@ class OrdersController < MerchantApplicationController
         #Nếu như số lượng cần lấy [stock.available_quality] có đủ trong kho,
         #Nếu đợt hàng có đủ s.phẩm thì lấy đúng số lượng cần lấy, không đủ thì lấy hết những gì đang có của đợt sp!
         takken_quality = stock.available_quality > required_quality ? required_quality : stock.available_quality
-        if !bill_discount
+        if bill_discount == true
           OrderDetail.create!(
-              :order_id=> current_order.id,
-              :product_id=> stock.id,
-              :quality=> takken_quality,
-              :price=>selling_item['price'],
-              :discount_percent=>selling_item['discount_percent'],
-              :discount_cash=>(selling_item['discount_percent']*selling_item['price']*takken_quality),
-              :total_amount=>(takken_quality * selling_item['price'])-(selling_item['discount_percent']*selling_item['price']*takken_quality))
+              :order_id => current_order.id,
+              :product_id => stock.id,
+              :name => @current_order.name,
+              :quality => takken_quality,
+              :price => selling_item['price'],
+              :discount_percent => 0,
+              :discount_cash => 0,
+              :total_amount => takken_quality * selling_item['price'])
         else
           OrderDetail.create!(
-              :order_id=> current_order.id,
-              :product_id=> stock.id,
-              :quality=> takken_quality,
-              :price=>selling_item['price'],
-              :discount_percent=>0,
-              :discount_cash=>0,
-              :total_amount=>takken_quality * selling_item['price'])
+              :order_id => current_order.id,
+              :product_id => stock.id,
+              :quality => takken_quality,
+              :price => selling_item['price'],
+              :discount_percent => selling_item['discount_percent'],
+              :discount_cash => (selling_item['discount_percent']*selling_item['price']*takken_quality/100),
+              :total_amount => (takken_quality * selling_item['price'])-(selling_item['discount_percent']*selling_item['price']*takken_quality/100))
         end
         #Tạo mới chi tiết đơn hàng với số lượng đã lấy [takken_quality]---------------------------------------------------
 
@@ -221,10 +217,10 @@ class OrdersController < MerchantApplicationController
         stock.save()
 
         #Cong Revenue vào bảng MetroSummary
-        if !bill_discount
-          total_amount = (takken_quality * selling_item['price']) - selling_item['discount_cash']
-        else
+        if bill_discount == true
           total_amount = (takken_quality * selling_item['price'])
+        else
+          total_amount = (takken_quality * selling_item['price']) - selling_item['discount_cash']
         end
 
         metro_summary.revenue += total_amount  if is_delivery_sale == false
@@ -264,8 +260,10 @@ class OrdersController < MerchantApplicationController
         a=bill_code[12,3]
         a=a.to_i + 1
         bill_code = Date.today.strftime("%d/%m/%y")+'-'+("%03d" % branch_id.id).to_s+("%03d" % a)
-      else
+      elsif bill_code[0..8] == Date.today.strftime("%d/%m/%y")
          bill_code = Date.today.strftime("%d/%m/%y")+'-'+("%03d" % branch_id.id).to_s+("%03d" % 1)
+      else
+        bill_code = Date.today.strftime("%d/%m/%y")+'-'+("%03d" % branch_id.id).to_s+("%03d" % 1)
       end
       return bill_code
     end
