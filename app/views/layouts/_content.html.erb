@@ -1,27 +1,15 @@
 <div class="wrapper">
-  <div class="left-side">
-    <ul class="sidebar-menu">
-      <li class="active">
-        <a href="">
-          <i class="fa fa-home"></i>
-          <span>Tổng quan</span>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <i class="fa fa-envelope"></i>
-          <span>Bán hàng</span>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <i class="fa fa-cubes"></i>
-          <span>Kiểm kho</span>
+  <div class="left-side" ng-class="{'collapsed': application.collapsedMode}">
+    <ul class="sidebar-menu" ng-repeat="item in application.navs">
+      <li ng-class="{active: application.currentUrl == item.url}">
+        <a href="#{{item.url}}">
+          <i class="fa" ng-class="item.icon"></i>
+          <span>{{item.title}}</span>
         </a>
       </li>
     </ul>
   </div>
 
-  <div class="right-side" ng-view>
+  <div ng-view class="right-side" ng-class="{'collapsed': application.collapsedMode}">
   </div>
 </div>

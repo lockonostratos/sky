@@ -25,4 +25,12 @@ class SessionsController < ApplicationController
     cookies.delete(:auth_token)
     redirect_to signin_path, :notice => 'Dang xuat thanh cong'
   end
+
+  def current_user
+    render json: current_account
+  end
+
+  def current_warehouse_user
+    render json: current_account.find_merchant_account
+  end
 end

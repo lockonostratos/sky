@@ -1,10 +1,11 @@
 <header ng-controller="headerCtrl as header">
-  <a href="#" class="logo">
-    EDS
+  <a href="#" class="logo" ng-class="{'collapsed': application.collapsedMode}">
+
   </a>
-  <nav class="navbar navbar-static-top" role="navigation">
-    <a href="#" class="navbar-brand sidebar-toggle">
-      <i class="fa fa-align-justify" tooltip-placement="left" tooltip="phóng to"></i>
+  <nav class="navbar navbar-static-top" role="navigation" ng-class="{'collapsed': application.collapsedMode}">
+    <a href="" class="navbar-brand sidebar-toggle" ng-click="application.toggleCollapse()">
+      <i class="fa" ng-class="application.collapsedMode ? 'fa-indent' : 'fa-outdent'"
+         tooltip-placement="{{application.collapsedMode ? 'right' : 'left'}}" tooltip="{{application.collapsedMode ? 'mở rộng' : 'thu nhỏ'}}"></i>
     </a>
 
     <div class="navbar-form navbar-left search-form" role="search">
@@ -16,14 +17,33 @@
       </div>
     </div>
 
-    <ul class="nav navbar-nav" ng-repeat="item in application.navs">
-      <li><a href="#{{item.url}}">{{item.title}}</a></li>
-    </ul>
-
     <div class="navbar-right">
       <ul class="nav navbar-nav">
-        <li></li>
+        <li class="dropdown menu teal">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-comments-o"></i>
+            <span class="label label-success">4</span>
+          </a>
+        </li>
+        <li class="dropdown menu peter-river">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-bell-o"></i>
+            <span class="label">4</span>
+          </a>
+        </li>
+        <li class="dropdown menu carrot">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-calendar"></i>
+            <span class="label label-success">4</span>
+          </a>
+        </li>
+        <li class="dropdown menu gray no-border">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-th-list"></i>
+          </a>
+        </li>
       </ul>
     </div>
   </nav>
 </header>
+

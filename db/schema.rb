@@ -502,16 +502,17 @@ ActiveRecord::Schema.define(version: 20140711100003) do
   end
 
   create_table "products", force: true do |t|
-    t.string   "product_code",                                           null: false
+    t.string   "product_code",                                             null: false
+    t.integer  "merchant_account_id",                                      null: false
     t.integer  "skull_id"
-    t.integer  "provider_id",                                            null: false
-    t.integer  "warehouse_id",                                           null: false
-    t.integer  "import_id",                                              null: false
-    t.string   "name",                                                   null: false
-    t.integer  "import_quality",                                         null: false
-    t.integer  "available_quality",                          default: 0, null: false
-    t.integer  "instock_quality",                            default: 0, null: false
-    t.decimal  "import_price",      precision: 10, scale: 0
+    t.integer  "provider_id",                                              null: false
+    t.integer  "warehouse_id",                                             null: false
+    t.integer  "import_id",                                                null: false
+    t.string   "name",                                                     null: false
+    t.integer  "import_quality",                                           null: false
+    t.integer  "available_quality",                            default: 0, null: false
+    t.integer  "instock_quality",                              default: 0, null: false
+    t.decimal  "import_price",        precision: 10, scale: 0
     t.datetime "expire"
     t.datetime "created_at"
     t.datetime "updated_at"

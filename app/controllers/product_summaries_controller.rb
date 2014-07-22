@@ -4,7 +4,7 @@ class ProductSummariesController < MerchantApplicationController
   # GET /product_summaries
   # GET /product_summaries.json
   def index
-    @product_summaries = ProductSummary.where(warehouse_id:current_merchant_account.current_warehouse_id)
+    @product_summaries = ProductSummary.products_of(current_merchant_account.current_warehouse_id)
     respond_to do |format|
       format.html { render layout: "account" }
       format.json {render json: @product_summaries}

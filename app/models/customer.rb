@@ -1,5 +1,4 @@
 class Customer < ActiveRecord::Base
-
   has_many :orders
   has_many :mackay_profiles
   has_many :mackay_personals, :through => :mackay_profiles
@@ -14,10 +13,18 @@ class Customer < ActiveRecord::Base
   belongs_to :merchant_account
   belongs_to :merchant_area
 
-  after_create :created_mertro_summary_add_customer
+  after_create :recaculate_metro_summary
+
+  def self.customers_of_brand(branch_id)
+    Customer.where(branch_id: branch_id)
+  end
+
+  def self.customers_of_merchant(merchant_id)
+    Customer.where(merchant_id: merchant_id)
+  end
 
   private
-  def created_mertro_summary_add_customer
+  def recaculate_metro_summary
     brach = Branch.where(merchant_id: self.merchant_id)
     warehouse = Warehouse.where(branch_id:brach.pluck(:id))
     metro_summary = MetroSummary.where(warehouse_id: warehouse.pluck(:id))

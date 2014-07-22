@@ -247,6 +247,7 @@ class InitializeDatabase < ActiveRecord::Migration
     #Bang CHI TIET san pham!--------------------------------->
     create_table :products do |t|
       t.string :product_code, :null => false
+      t.belongs_to :merchant_account, :null => false
       t.belongs_to :skull
       t.belongs_to :provider, :null => false
       t.belongs_to :warehouse, :null => false

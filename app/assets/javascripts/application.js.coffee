@@ -21,7 +21,7 @@ Sky.config ['$routeProvider', ($routeProvider) ->
       templateUrl: '../assets/home/post.html'
       controller: 'Sky.postCtrl'
     }).otherwise( {
-      templateUrl: '../assets/common/404.html'
+      templateUrl: '../assets/global/404.html'
     })
 ]
 
