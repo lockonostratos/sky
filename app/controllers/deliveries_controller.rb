@@ -15,7 +15,7 @@ class DeliveriesController < MerchantApplicationController
   # GET /deliveries/1.json
   def show
     respond_to do |format|
-      format.html
+      format.html { render layout: "account" }
       format.json { render :json => @delivery }
     end
   end
@@ -27,6 +27,10 @@ class DeliveriesController < MerchantApplicationController
 
   # GET /deliveries/1/edit
   def edit
+    respond_to do |format|
+      format.html { render layout: "account" }
+      format.json { render :json => @delivery }
+    end
   end
 
   # POST /deliveries
@@ -54,6 +58,7 @@ class DeliveriesController < MerchantApplicationController
       if delivery.success == true || delivery.status != 0 || @delivery.status == 0
         format.html { redirect_to @delivery, notice: 'Ko the success' }
         format.json { head :no_content }
+        return
       end
 
       if @delivery.status == 1

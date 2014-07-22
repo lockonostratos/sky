@@ -186,8 +186,11 @@ class InitializeDatabase < ActiveRecord::Migration
       t.belongs_to :merchant, :null => false
       t.belongs_to :merchant_account, :null => false
 
-      t.string :skull_code, :null => false
-      t.string :description
+      t.string :skull_01
+      t.string :skull_02
+      t.string :skull_03
+      t.string :unit, :null => false
+      t.integer :unit_quality
 
       t.timestamps
     end

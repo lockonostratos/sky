@@ -567,8 +567,11 @@ ActiveRecord::Schema.define(version: 20140711100003) do
   create_table "skulls", force: true do |t|
     t.integer  "merchant_id",         null: false
     t.integer  "merchant_account_id", null: false
-    t.string   "skull_code",          null: false
-    t.string   "description"
+    t.string   "skull_01"
+    t.string   "skull_02"
+    t.string   "skull_03"
+    t.string   "unit",                null: false
+    t.integer  "unit_quality"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
