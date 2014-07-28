@@ -56,8 +56,6 @@ GEM
       eco-source
       execjs
     eco-source (1.1.0.rc.1)
-    enumerize (0.8.0)
-      activesupport (>= 3.2)
     erubis (2.7.0)
     execjs (2.2.1)
     ffi (1.9.3-x86-mingw32)
@@ -173,7 +171,6 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   compass-rails
   eco
-  enumerize
   font-awesome-rails
   haml
   haml-rails

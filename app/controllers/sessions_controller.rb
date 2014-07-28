@@ -1,6 +1,10 @@
 class SessionsController < ApplicationController
   skip_before_filter :check_account_permission, :only => [:new, :create]
 
+  def index
+    render json: current_account
+  end
+
   def new
     render layout: "account"
   end
@@ -24,13 +28,5 @@ class SessionsController < ApplicationController
   def destroy
     cookies.delete(:auth_token)
     redirect_to signin_path, :notice => 'Dang xuat thanh cong'
-  end
-
-  def current_user
-    render json: current_account
-  end
-
-  def current_warehouse_user
-    render json: current_account.find_merchant_account
   end
 end

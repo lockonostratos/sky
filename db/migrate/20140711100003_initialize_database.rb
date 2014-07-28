@@ -244,7 +244,7 @@ class InitializeDatabase < ActiveRecord::Migration
 
       t.timestamps
     end
-    #Bang CHI TIET san pham!--------------------------------->
+    #Bang CHI TIET san pham!-------------------------------->
     create_table :products do |t|
       t.string :product_code, :null => false
       t.belongs_to :merchant_account, :null => false
@@ -426,52 +426,25 @@ class InitializeDatabase < ActiveRecord::Migration
     end
 
 #Phân quyền------------------------------------------------------------------------------------------------------->
-=begin
-    # create_table :merchant_account_permission_details  do |t|
-    #   t.belongs_to :merchant_account
-    #   t.belongs_to :role
-    #   t.string :permission_text
-    #   t.timestamps
-    # end
-    # create_table :role_warehouse do |t|
-    #   t.belongs_to :role
-    #   t.belongs_to :warehouse
-    #   t.timestamps
-    # end
-    # create_table :permission_details do |t|
-    #   t.belongs_to :permission
-    #   t.string :name
-    #   t.timestamps
-    # end
-=end
-    create_table :permissions do |t|
-      t.integer :headquater_id
-      t.string :permission_key
-      t.string :permission_name
-      t.timestamps
-    end
+
+    #Của Merchant
     create_table :roles do |t|
-      t.integer :headquater_id
-      t.string :role_name
+      t.integer :headquater, default: 0 #trường hợp = 0 tức là Role này dùng chung (global) cho mọi merchant!
+      t.string :name
+      t.string :permissions
       t.timestamps
     end
+
+    #Của Merchant
     create_table :role_permissions do |t|
       t.belongs_to :role
-      t.belongs_to :permission
+      t.integer :permission_key
       t.timestamps
     end
+
     create_table :merchant_account_roles do |t|
       t.belongs_to :merchant_account
       t.belongs_to :role
-      t.text :permission_text
-      t.text :warehouse_text
-      t.timestamps
-    end
-    create_table :merchant_account_permissions do |t|
-      t.belongs_to :merchant_account
-      t.belongs_to :permission
-      t.boolean :active, :default=>true
-      t.timestamps
     end
 
     #Ho so mackay-------------------------------------------------------------------------------------------->

@@ -1,4 +1,7 @@
-Sky.controller 'applicationCtrl', ['$routeParams', '$location', '$scope', ($routeParams, $location, $scope) ->
+Sky.controller 'applicationCtrl', ['$routeParams', '$location', '$scope', 'Common', 'MerchantAccount'
+($routeParams, $location, $scope, Common, MerchantAccount) ->
+  MerchantAccount.get('current_user').then (data) -> Common.currentMerchantAccount = data
+
   @showMenu = true;
   @collapsedMode = false;
   @name = 'Enterprise Dual Strategy'

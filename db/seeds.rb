@@ -18,7 +18,16 @@
 #
 # t.timestamps
 
-#Tạo
+#Default Roles!
+saleRole = Role.create!(name: "Bán Hàng")
+saleRole.add_permission(:sale)
+managerRole = Role.create!(name: "Quản Lý")
+managerRole.add_permission(:sale)
+managerRole.add_permission(:return)
+managerRole.add_permission(:import)
+managerRole.add_permission(:export)
+managerRole.clone("Quản Lý", "Quản Lý Ext")
+
 
 #1.Tạo tài khoản của chính Gera
 Account.create({extension: :gera, display_name: 'hongky', email: 'hongky@gmail.com', password: '123'})
@@ -38,9 +47,18 @@ dongthap = Branch.create({name: 'HỒ CHÍ MINH', merchant_id: loc.headquater})
 
 khoHcm = Warehouse.find(loc.find_merchant_account.current_warehouse_id)
 khoDongThap = Warehouse.find_by_branch_id(dongthap.id)
-tehao.find_merchant_account.move_to_warehouse(khoDongThap.id)
+
+tai_mer_acc = tai.find_merchant_account
 loc_mer_acc = loc.find_merchant_account
 son_mer_acc = son.find_merchant_account
+tehao_mer_acc = tehao.find_merchant_account
+#Gán quyền
+loc_mer_acc.add_role_by_name("Bán Hàng")
+loc_mer_acc.add_role_by_name("Quản Lý")
+son_mer_acc.add_role_by_name("Bán Hàng")
+tehao_mer_acc.add_role_by_name("Bán Hàng")
+
+tehao_mer_acc.move_to_warehouse(khoDongThap.id)
 
 
 #3. Tạo Skull---------------------------------------------------------------------------------------------------------->
@@ -69,19 +87,19 @@ provider_hcm_q3 = Provider.create({merchant_id:loc_mer_acc.merchant_id, name:'Qu
 provider_hcm_q4 = Provider.create({merchant_id:loc_mer_acc.merchant_id, name:'Quận 4 - Hồ Chí Minh'})
 
 #5. Tạo Khu Vực Area----------------------------------------------------------------------------------------------------->
-area_hcm_q1 = MerchantArea.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, name:'Quận 1 - Hồ Chí Minh', description:''})
-area_hcm_q2 = MerchantArea.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, name:'Quận 2 - Hồ Chí Minh', description:''})
+area_hcm_q1 = MerchantArea.create({merchant_id:tai_mer_acc.merchant_id, merchant_account_id:tai_mer_acc.account_id, name:'Quận 1 - Hồ Chí Minh', description:''})
+area_hcm_q2 = MerchantArea.create({merchant_id:tai_mer_acc.merchant_id, merchant_account_id:tai_mer_acc.account_id, name:'Quận 2 - Hồ Chí Minh', description:''})
 area_hcm_q3 = MerchantArea.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, name:'Quận 3 - Hồ Chí Minh', description:''})
 area_hcm_q4 = MerchantArea.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, name:'Quận 4 - Hồ Chí Minh', description:''})
 
 #6. Tạo Khách hàng----------------------------------------------------------------------------------------------------->
-customer_hoangnam = Customer.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, merchant_area_id:area_hcm_q1.id, name:'Nguyễn Hoàng Nam', company_name:'Cty TNHH Hoàng Nam', phone:'0123456789', address:'Hồ Chí Minh', email:'hoangnam@gmail.com', sex:0})
-customer_hongky = Customer.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, merchant_area_id:area_hcm_q1.id, name:'N', company_name:'Cty TNHH Hoàng Nam', phone:'0123456789', address:'Hồ Chí Minh', email:'hoangnam@gmail.com', sex:0})
-customer_hoangnam = Customer.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, merchant_area_id:area_hcm_q1.id, name:'Nguyễn Hoàng Nam', company_name:'Cty TNHH Hoàng Nam', phone:'0123456789', address:'Hồ Chí Minh', email:'hoangnam@gmail.com', sex:0})
-customer_hoangnam = Customer.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, merchant_area_id:area_hcm_q1.id, name:'Nguyễn Hoàng Nam', company_name:'Cty TNHH Hoàng Nam', phone:'0123456789', address:'Hồ Chí Minh', email:'hoangnam@gmail.com', sex:0})
-customer_hoangnam = Customer.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, merchant_area_id:area_hcm_q1.id, name:'Nguyễn Hoàng Nam', company_name:'Cty TNHH Hoàng Nam', phone:'0123456789', address:'Hồ Chí Minh', email:'hoangnam@gmail.com', sex:0})
+customer_hoangnam = Customer.create({merchant_id:tai_mer_acc.merchant_id, merchant_account_id:tai_mer_acc.account_id, merchant_area_id:area_hcm_q1.id, name:'Nguyễn Hoàng Nam', company_name:'Cty TNHH Hoàng Nam', phone:'0123456789', address:'Hồ Chí Minh', email:'hoangnam@gmail.com', sex:0})
+customer_thuanthai = Customer.create({merchant_id:tai_mer_acc.merchant_id, merchant_account_id:tai_mer_acc.account_id, merchant_area_id:area_hcm_q1.id, name:'Huỳnh Thuận Thái', company_name:'CSC Vietnam', phone:'0123456789', address:'Hồ Chí Minh', email:'thuanthai@gmail.com', sex:0})
 
-
+customer_hongky = Customer.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, merchant_area_id:area_hcm_q3.id, name:'Nguyễn Hồng Kỳ', company_name:'Thien Ban Tech', phone:'0123456789', address:'Hồ Chí Minh', email:'nguyenhongkynhk@gmail.com', sex:0})
+customer_trunghau = Customer.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, merchant_area_id:area_hcm_q3.id, name:'Lê Trung Hậu', company_name:'Domexco', phone:'0123456789', address:'Đồng Tháp', email:'hauletrung@gmail.com', sex:0})
+customer_vanhung = Customer.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, merchant_area_id:area_hcm_q3.id, name:'Huỳnh Văn Hùng', company_name:'SK Telecom', phone:'0123456789', address:'Hồ Chí Minh', email:'huangwenxiong@gmail.com', sex:0})
+customer_vansang = Customer.create({merchant_id:loc_mer_acc.merchant_id, merchant_account_id:loc_mer_acc.account_id, merchant_area_id:area_hcm_q3.id, name:'Nguyễn Văn Sang', company_name:'iThink', phone:'0123456789', address:'Hồ Chí Minh', email:'sangnv@gmail.com', sex:0})
 
 #Tạo phiếu Import----------------------------------------------------------------------------------------------------->
 new_import = Import.create({warehouse_id:khoHcm.id, merchant_account_id:loc_mer_acc.id, name:'Nhập Kho Lần Đầu 2014', description:'Nhập Đầu Năm'})
@@ -163,5 +181,3 @@ Product.create({product_code:'1234567890056', merchant_account_id: loc_mer_acc.a
 importDT2 = Import.create({warehouse_id:khoDongThap.id, merchant_account_id:son_mer_acc.id, name:'Nhập Kho Lần Đầu 2014 (Bổ sung)', description:'Nhập Đầu Năm 2014'})
 Product.create({product_code:'1234567890045', merchant_account_id: loc_mer_acc.account_id, skull_id:skull_goi_2kg_10.id, provider_id: provider_hcm_q1.id, warehouse_id: importDT2.warehouse_id, import_id: importDT2.id, name:'Tata 25WG',  import_quality:500, available_quality:500, instock_quality:500, import_price:12000})
 Product.create({product_code:'1234567890046', merchant_account_id: loc_mer_acc.account_id, skull_id:skull_chai_100ml_30.id, provider_id: provider_hcm_q1.id, warehouse_id: importDT2.warehouse_id, import_id: importDT2.id, name:'Vicidi-M 50ND',  import_quality:500, available_quality:500, instock_quality:500, import_price:35000})
-
-Customer.create()

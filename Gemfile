@@ -48,6 +48,5 @@ gem 'haml-rails'
 gem 'eco'
 
 gem 'tzinfo-data'
-gem 'enumerize'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bcrypt-ruby', '~> 3.1.2'

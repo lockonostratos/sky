@@ -25,5 +25,9 @@ Sky.factory 'Account', [ 'railsResourceFactory', (railsResourceFactory) ->
 ]
 
 Sky.factory 'MerchantAccount', [ 'railsResourceFactory', (railsResourceFactory) ->
-  railsResourceFactory { url: 'api/merchant_accounts', name: 'merchant_account' }
+  railsResourceFactory { url: 'api/merchant_accounts', name: 'merchantAccounts' }
+]
+
+Sky.factory 'Customer', [ 'railsResourceFactory', (railsResourceFactory) ->
+  railsResourceFactory { url: 'api/customers', name: 'customer' }
 ]

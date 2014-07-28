@@ -4,17 +4,22 @@ Sky::Application.routes.draw do
   get 'signout', :to => 'sessions#destroy', as: 'signout'
   get 'signup', :to => 'accounts#new', as: 'signup'
   resources :sessions
-  get 'current_user', :to => 'sessions#current_user', as: 'ca'
-  get 'current_warehouse_user', :to => 'sessions#current_warehouse_user', as: 'current_warehouse_user'
+
 
   scope "api" do
+    get 'current_user', :to => 'sessions#current_user', as: 'ca'
+    resources :sessions
+
     resources :products
     resources :product_summaries
     resources :orders
     resources :order_details
     resources :deliveries
     resources :accounts
+    get 'merchant_accounts/current_sales', :to => 'merchant_accounts#current_sales', as: 'current_sales'
+    get 'merchant_accounts/current_user', :to => 'merchant_accounts#current_user', as: 'current_merchant_user'
     resources :merchant_accounts
+
     resources :customers
   end
 end

@@ -1,23 +1,25 @@
-<div class="row">
+<div class="row no-margin">
     <div class="col-lg-2">
-        <select ng-model="currentAccount" ng-change="change_currentAccount(currentAccount)"
-                ng-init="currentAccount = currentAccount || merchant_accounts[0]"
-                ng-options="currentAccount.name group by currentAccount.warehouse_id.name for currentAccount in merchant_accounts">
-        </select>
-
+        <select ng-model="currentAccount" ng-options="sale.email for sale in sales_accounts"></select>
     </div>
     <div class="col-lg-3">
-        <select ng-model="current_product_summary" ng-change="change_product_summary(current_product_summary)"
-                ng-init="current_product_summary = current_product_summary || product_summaries[-1]"
-                ng-options="current_product_summary.name for (index ,current_product_summary) in product_summaries">
-            <option value="">-- chọn sản phẩm --</option>
-        </select>
-        <input ng-model="current_product_summary" type="button" value="Thêm(reset)" ng-click="addProductSummary(current_product_summary,true)" ng-disabled="productList.enable_input"/>
-        <input ng-model="current_product_summary" type="button" value="Thêm(next)" ng-click="addProductSummary(current_product_summary,false)" ng-disabled="productList.enable_input"/>
+        <input type="text" ng-model="currentLabel" typeahead="ps.fullSearch for ps in product_summaries | filter:$viewValue | limitTo:8"
+               typeahead-on-select="productSummaryChange($item, $model, $label)" />
+
+
+        <!--<select ng-model="current_product_summary" ng-change="change_product_summary(current_product_summary)"-->
+                <!--ng-init="current_product_summary = current_product_summary || product_summaries[-1]"-->
+                <!--ng-options="current_product_summary.name for (index ,current_product_summary) in product_summaries">-->
+            <!--<option value="">-- chọn sản phẩm --</option>-->
+        <!--</select>-->
+        <input ng-model="current_product_summary" type="button" value="Thêm(reset)" ng-click="addProductSummary(currentProduct,true)" ng-disabled="currentProduct == null"/>
+        <input ng-model="current_product_summary" type="button" value="Thêm(next)" ng-click="addProductSummary(currentProduct,false)" ng-disabled="currentProduct == null"/>
     </div>
+  <!--ng-change="change_product_summary_sale_quality(current_product_summary)"-->
     <div class="col-lg-6">
-        <input ng-model="current_product_summary.sale_quality" type="number" min="0" ng-disabled="productList.enable_input"
-               ng-change="change_product_summary_sale_quality(current_product_summary)"
+        <input ng-model="currentProduct.sale_quality" type="number" min="0"
+               ng-disabled="currentProduct == null"
+               ng-change="change_product_summary_sale_quality(currentProduct)"
                value="{{current_product_summary.sale_quality}}">
         <input ng-disabled="true" value='{{current_product_summary.name}} - {{current_product_summary.productCode}}'>
         <input ng-disabled="true" value='SL:{{current_product_summary.quality}} - {{current_product_summary.price | currency}}'>
@@ -26,13 +28,12 @@
     <div class="col-lg-2">
 
     </div>
-
 </div>
-<div class="row">
+<div class="row no-margin">
     <div class="col-lg-2">
         <select ng-model="currentCustomer" ng-change="change_currentCustomer(currentCustomer)"
-                ng-init="currentCustomer = currentCustomer || merchant_customers[0]"
-                ng-options="currentCustomer.name for currentCustomer in merchant_customers">
+                ng-init="currentCustomer = currentCustomer"
+                ng-options="currentCustomer.name for currentCustomer in customers">
         </select>
     </div>
     <div class="col-lg-10">
@@ -54,7 +55,7 @@
                value="{{current_product_summary.final_price | currency}}">
     </div>
 </div>
-<div class="row">
+<div class="row no-margin">
     <table class="table table-condensed table-hover">
         <thead>
         <th>ID</th>
@@ -87,7 +88,7 @@
     </table>
 </div>
 <br/>
-<div class="row">
+<div class="row no-margin">
     <div class="col-lg-2">
         Phương Thức VC:
         <select ng-model="delivery"
@@ -122,7 +123,7 @@
                         ng-init="productList.order_summary.total_price = 0"/>
     </div>
 </div>
-<div class="row">
+<div class="row no-margin">
     <div class="col-lg-2">
         Cách Thanh Toán:
         <select ng-model="payment_method"
@@ -154,6 +155,7 @@
                          ng-change="productList.order_summary.money1 = productList.order_summary.money - productList.order_summary.temp_final_price"
                          ng-init="productList.order_summary.final_price = 0" />
     </div>
+  {{currentProduct}}
 </div>
 
 

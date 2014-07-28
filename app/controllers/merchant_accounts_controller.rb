@@ -1,4 +1,4 @@
-class MerchantAccountsController < ApplicationController
+class MerchantAccountsController < MerchantApplicationController
   before_action :set_merchant_account, only: [:edit, :update, :destroy]
 
   # GET /merchant_accounts
@@ -9,6 +9,15 @@ class MerchantAccountsController < ApplicationController
       format.html { render layout: "account" }
       format.json { render :json => @merchant_accounts }
     end
+  end
+
+  def current_user
+    render json: current_account.find_merchant_account
+  end
+
+  def current_sales
+    @sales = Merchant.find_branch_sales(current_merchant_account.branch_id)
+    render json: @sales, :root => false
   end
 
   # GET /merchant_accounts/1

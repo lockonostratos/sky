@@ -9,9 +9,7 @@ class MerchantAccount < ActiveRecord::Base
   has_many :imports
   has_many :merchant_areas
   has_many :product_summaries
-  has_many :merchant_account_roles
-  has_many :merchant_account_permissions
-  has_many :merchant_account_permission_details
+  has_many :roles, class_name: 'MerchantAccountRole', foreign_key: 'merchant_account_id'
   has_many :temp_products
   belongs_to :account
   belongs_to :merchant
@@ -21,9 +19,46 @@ class MerchantAccount < ActiveRecord::Base
   before_save :add_merchant_account
   after_create :add_staff_count_metro_summary
 
+  scope :sales, -> { roles }
+
+  def find_permissions
+    result = MerchantAccountRole
+             .joins("INNER JOIN role_permissions ON role_permissions.role_id = merchant_account_roles.role_id")
+             .where("merchant_account_id = ?", self.id)
+             .pluck("GROUP_CONCAT(DISTINCT permission_key)").first()
+
+    result.split(',') if result
+  end
+
   def move_to_warehouse (id)
     target_warehouse = Warehouse.find(id)
-    self.update({current_warehouse_id: target_warehouse.id, branch_id: target_warehouse.branch_id})
+    if target_warehouse
+      self.update({current_warehouse_id: target_warehouse.id, branch_id: target_warehouse.branch_id})
+    else
+      nil
+    end
+
+  end
+
+  def move_to_branch (branch_id, warehouse_id)
+    target_branch = Branch.find(branch_id)
+    target_warehouse = Warehouse.find_by(id: warehouse_id, branch_id: branch_id)
+    if target_branch and target_warehouse
+      self.update({current_warehouse_id: target_warehouse.id, branch_id: target_branch.id})
+    else
+      nil
+    end
+
+  end
+
+  def add_role_by_id(id)
+    current_role = Role.find(id)
+    MerchantAccountRole.create(role_id: current_role.id, merchant_account_id: self.id) if current_role
+  end
+
+  def add_role_by_name(name)
+    current_role = Role.find_by_name(name)
+    MerchantAccountRole.create(role_id: current_role.id, merchant_account_id: self.id) if current_role
   end
 
   private

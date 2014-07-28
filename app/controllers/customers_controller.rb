@@ -5,7 +5,7 @@ class CustomersController < MerchantApplicationController
     @customers = Customer.customers_of_merchant(current_merchant_account.merchant_id)
     respond_to do |format|
       format.html
-      format.json { render :json => @customers }
+      format.json { render :json => @customers, :root => false }
     end
   end
 

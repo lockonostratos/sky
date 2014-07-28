@@ -386,21 +386,9 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.datetime "updated_at"
   end
 
-  create_table "merchant_account_permissions", force: true do |t|
-    t.integer  "merchant_account_id"
-    t.integer  "permission_id"
-    t.boolean  "active",              default: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "merchant_account_roles", force: true do |t|
-    t.integer  "merchant_account_id"
-    t.integer  "role_id"
-    t.text     "permission_text"
-    t.text     "warehouse_text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "role_id"
+    t.integer "merchant_account_id"
   end
 
   create_table "merchant_accounts", force: true do |t|
@@ -481,14 +469,6 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.datetime "updated_at"
   end
 
-  create_table "permissions", force: true do |t|
-    t.integer  "headquater_id"
-    t.string   "permission_key"
-    t.string   "permission_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "product_summaries", force: true do |t|
     t.string   "product_code",                                             null: false
     t.integer  "skull_id"
@@ -553,14 +533,14 @@ ActiveRecord::Schema.define(version: 20140711100003) do
 
   create_table "role_permissions", force: true do |t|
     t.integer  "role_id"
-    t.integer  "permission_id"
+    t.integer  "permission_key"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "roles", force: true do |t|
-    t.integer  "headquater_id"
-    t.string   "role_name"
+    t.integer  "headquater", default: 0
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

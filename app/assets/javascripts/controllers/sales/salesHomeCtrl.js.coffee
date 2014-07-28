@@ -1,28 +1,22 @@
-Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Product', 'ProductSummary', ($scope, $routeParams, $http, Product, ProductSummary) ->
-  $scope.merchant_customers = [
-    {
-      id: 1
-      name: 'Nguyễn Văn An'
-    }
-  ,
-    {
-      id: 2,
-      name: 'Lê Văn Bác'
-    }
-  ]
-  $scope.merchant_accounts = [
-    id: 1
-    name: 'Nguyễn Hồng Kỳ'
-    warehouse_id: {id:1, name:'Chi Nhánh 1'}
-  ,
-    id: 2
-    name: 'Lê Ngọc Sơn'
-    warehouse_id: {id:1, name:'Chi Nhánh 1'}
-  ,
-    id: 3
-    name: 'Nguyễn Quốc Lộc'
-    warehouse_id: {id:2, name:'Chi Nhánh 2'}
-  ]
+Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'ProductSummary', 'Customer', 'MerchantAccount',
+($scope, $routeParams, $http, Common, Product, ProductSummary, Customer, MerchantAccount) ->
+
+  $scope.currentCustomer = {}
+  $scope.customers = []
+  Customer.query().then (data) ->
+    $scope.customers = data
+    $scope.currentCustomer = data[0]
+
+  $scope.currentAccount = {}
+  $scope.sales_accounts = []
+  MerchantAccount.get('current_sales').then (data) ->
+    $scope.sales_accounts = data
+    foundCurrent = Lazy($scope.sales_accounts).findWhere({accountId: Common.currentMerchantAccount.accountId})
+    $scope.currentAccount = if foundCurrent then foundCurrent else $scope.sales_accounts[0]
+
+  $scope.productSummaryChange = ($item, $model, $label) ->
+    $scope.currentProduct = $item
+
   $scope.transports = [
     {
       id: 0
@@ -46,12 +40,16 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Product', 'ProductSummar
     }
   ]
   $scope.product_summaries = []
+  ProductSummary.query().then (data) ->
+    for item in data
+      item.fullSearch = item.name
+      item.fullSearch += ' (' + item.skullId + ')' if item.skullId
+      $scope.product_summaries.push item
 #  $http.get("/api/product_summaries.json").success (data)->
 #    $scope.product_summaries = data
 
   $scope.product = new ProductSummary()
-  ProductSummary.query().then (data) ->
-    $scope.product_summaries = data
+
   $scope.productList = {
     enable_input: true
     enable_input_bill: true
@@ -62,8 +60,8 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Product', 'ProductSummar
     buy_product_list: []
     order_summary: {
       temp:0
-      merchant_account: $scope.merchant_accounts[0]
-      merchant_customer: $scope.merchant_customers[0]
+      merchant_account:0
+      merchant_customer:0
       warehouse_id:1
       name:'Sang'
 
@@ -202,7 +200,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Product', 'ProductSummar
   #cập nhật số tiền khi số lượng mua thay đổi-------------------------------------------------------------------------->
   calculation_change_product_summary_sale_quality= (item)->
     $scope.productList.order_summary.temp = 0
-    for items, index in $scope.productList.buy_product_list when items.id == item.id then $scope.productList.order_summary.temp += items.sale_quality
+    for items in $scope.productList.buy_product_list when items.id == item.id then $scope.productList.order_summary.temp += items.sale_quality
     if item.sale_quality == undefined || item.sale_quality == 0 || item.sale_quality == null then item.sale_quality = 1
     if item.sale_quality >= (item.quality - $scope.productList.order_summary.temp) then item.sale_quality = (item.quality - $scope.productList.order_summary.temp)
     if item.sale_quality > 0
