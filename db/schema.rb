@@ -387,8 +387,8 @@ ActiveRecord::Schema.define(version: 20140711100003) do
   end
 
   create_table "merchant_account_roles", force: true do |t|
-    t.integer "role_id"
     t.integer "merchant_account_id"
+    t.integer "role_id"
   end
 
   create_table "merchant_accounts", force: true do |t|
@@ -435,6 +435,15 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.integer "revenue_month",      limit: 8, default: 0
   end
 
+  create_table "option", force: true do |t|
+    t.integer  "merchant_id"
+    t.integer  "branch_id"
+    t.integer  "transport"
+    t.integer  "payment_method"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "order_details", force: true do |t|
     t.integer  "order_id",                                              null: false
     t.string   "name"
@@ -445,6 +454,7 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.decimal  "discount_cash",    precision: 10, scale: 0, default: 0, null: false
     t.decimal  "discount_percent", precision: 10, scale: 0, default: 0, null: false
     t.decimal  "total_amount",     precision: 10, scale: 0, default: 0, null: false
+    t.integer  "status",                                    default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -456,14 +466,15 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.integer  "customer_id",                                                  null: false
     t.string   "name"
     t.boolean  "return",                                       default: false, null: false
+    t.integer  "payment_method",                                               null: false
     t.boolean  "delivery",                                     default: false, null: false
     t.boolean  "bill_discount",                                default: false
     t.decimal  "total_price",         precision: 10, scale: 0,                 null: false
-    t.decimal  "deposit",             precision: 10, scale: 0, default: 0,     null: false
     t.decimal  "discount_voucher",    precision: 10, scale: 0, default: 0,     null: false
     t.decimal  "discount_cash",       precision: 10, scale: 0, default: 0,     null: false
     t.decimal  "final_price",         precision: 10, scale: 0, default: 0,     null: false
-    t.integer  "payment_method",                                               null: false
+    t.decimal  "deposit",             precision: 10, scale: 0, default: 0,     null: false
+    t.decimal  "currency_debit",      precision: 10, scale: 0, default: 0,     null: false
     t.integer  "status",                                       default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -539,8 +550,9 @@ ActiveRecord::Schema.define(version: 20140711100003) do
   end
 
   create_table "roles", force: true do |t|
-    t.integer  "headquater", default: 0
+    t.integer  "headquater",  default: 0
     t.string   "name"
+    t.string   "permissions"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -564,6 +576,38 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.integer  "real_quality",     default: 0,     null: false
     t.integer  "quality"
     t.boolean  "submited",         default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "temp_order_details", force: true do |t|
+    t.integer  "order_id",                                              null: false
+    t.integer  "product_id",                                            null: false
+    t.integer  "quality",                                               null: false
+    t.decimal  "price",            precision: 10, scale: 0,             null: false
+    t.decimal  "discount_cash",    precision: 10, scale: 0, default: 0, null: false
+    t.decimal  "discount_percent", precision: 10, scale: 0, default: 0, null: false
+    t.decimal  "total_amount",     precision: 10, scale: 0, default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "temp_orders", force: true do |t|
+    t.integer  "branch_id",                                                    null: false
+    t.integer  "warehouse_id",                                                 null: false
+    t.integer  "merchant_account_id",                                          null: false
+    t.integer  "customer_id",                                                  null: false
+    t.string   "name"
+    t.boolean  "return",                                       default: false, null: false
+    t.integer  "payment_method",                                               null: false
+    t.boolean  "delivery",                                     default: false, null: false
+    t.boolean  "bill_discount",                                default: false
+    t.decimal  "total_price",         precision: 10, scale: 0,                 null: false
+    t.decimal  "discount_voucher",    precision: 10, scale: 0, default: 0,     null: false
+    t.decimal  "discount_cash",       precision: 10, scale: 0, default: 0,     null: false
+    t.decimal  "final_price",         precision: 10, scale: 0, default: 0,     null: false
+    t.decimal  "deposit",             precision: 10, scale: 0, default: 0,     null: false
+    t.decimal  "currency_debit",      precision: 10, scale: 0, default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

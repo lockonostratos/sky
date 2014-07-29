@@ -1,0 +1,31 @@
+%h1 Listing temp_order_details
+
+%table
+  %tr
+    %th Order
+    %th Product
+    %th Quality
+    %th Price
+    %th Discount cash
+    %th Discount percent
+    %th Total amount
+    %th
+    %th
+    %th
+
+  - @temp_order_details.each do |temp_order_detail|
+    %tr
+      %td= temp_order_detail.order_id
+      %td= temp_order_detail.product_id
+      %td= temp_order_detail.quality
+      %td= temp_order_detail.price
+      %td= temp_order_detail.discount_cash
+      %td= temp_order_detail.discount_percent
+      %td= temp_order_detail.total_amount
+      %td= link_to 'Show', temp_order_detail
+      %td= link_to 'Edit', edit_temp_order_detail_path(temp_order_detail)
+      %td= link_to 'Destroy', temp_order_detail, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Temp order detail', new_temp_order_detail_path

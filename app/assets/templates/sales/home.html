@@ -1,28 +1,36 @@
 <div class="row no-margin">
     <div class="col-lg-2">
-        <select ng-model="currentAccount" ng-options="sale.email for sale in sales_accounts"></select>
+        <select ng-model="currentAccount" ng-options="sale.email for sale in sales_accounts"
+                ng-change="change_currentAccount(currentAccount)"></select>
+      <input type="button" ng-model="createTempOrder" value="Tạo Phiếu"
+             ng-click="createTempOrder()"/>
     </div>
+
     <div class="col-lg-3">
-        <input type="text" ng-model="currentLabel" typeahead="ps.fullSearch for ps in product_summaries | filter:$viewValue | limitTo:8"
-               typeahead-on-select="productSummaryChange($item, $model, $label)" />
+
+      <input type="text" ng-model="currentLabel" typeahead="ps.fullSearch for ps in product_summaries | filter:$viewValue | limitTo:8"
+             typeahead-on-select="productSummaryChange($item, $model, $label)" />
 
 
-        <!--<select ng-model="current_product_summary" ng-change="change_product_summary(current_product_summary)"-->
-                <!--ng-init="current_product_summary = current_product_summary || product_summaries[-1]"-->
-                <!--ng-options="current_product_summary.name for (index ,current_product_summary) in product_summaries">-->
-            <!--<option value="">-- chọn sản phẩm --</option>-->
-        <!--</select>-->
-        <input ng-model="current_product_summary" type="button" value="Thêm(reset)" ng-click="addProductSummary(currentProduct,true)" ng-disabled="currentProduct == null"/>
-        <input ng-model="current_product_summary" type="button" value="Thêm(next)" ng-click="addProductSummary(currentProduct,false)" ng-disabled="currentProduct == null"/>
+
+      <!--<select ng-model="currentProduct" ng-change="change_product_summary(currentProduct)"-->
+              <!--ng-init="currentProduct = currentProduct || product_summaries[-1]"-->
+              <!--ng-options="currentProduct.name for (index ,currentProduct) in product_summaries">-->
+          <!--<option value="">-- chọn sản phẩm --</option>-->
+      <!--</select>-->
+      <input ng-model="currentProduct" type="button" value="Thêm(reset)"
+             ng-click="addProductSummary(currentProduct,true)" ng-disabled="currentProduct == null"/>
+      <input ng-model="currentProduct" type="button" value="Thêm(next)"
+             ng-click="addProductSummary(currentProduct,false)" ng-disabled="currentProduct == null"/>
     </div>
-  <!--ng-change="change_product_summary_sale_quality(current_product_summary)"-->
+  <!--ng-change="change_product_summary_sale_quality(currentProduct)"-->
     <div class="col-lg-6">
-        <input ng-model="currentProduct.sale_quality" type="number" min="0"
+        <input ng-model="tempOrderDetail.quality" type="number" min="0"
                ng-disabled="currentProduct == null"
-               ng-change="change_product_summary_sale_quality(currentProduct)"
-               value="{{current_product_summary.sale_quality}}">
-        <input ng-disabled="true" value='{{current_product_summary.name}} - {{current_product_summary.productCode}}'>
-        <input ng-disabled="true" value='SL:{{current_product_summary.quality}} - {{current_product_summary.price | currency}}'>
+               ng-change="change_tempOrderDetail_quality(tempOrderDetail)">
+
+        <input ng-disabled="true" value='{{currentProduct.name}} - {{currentProduct.productCode}}'>
+        <input ng-disabled="true" value='SL:{{currentProduct.quality}} - {{currentProduct.price | currency}}'>
 
     </div>
     <div class="col-lg-2">
@@ -38,21 +46,19 @@
     </div>
     <div class="col-lg-10">
         GiảmGiá%
-        <input ng-model="current_product_summary.discount_percent" type="number" step="5"
-               ng-disabled="productList.enable_input"
-               ng-change="change_product_summary_discount_percent(current_product_summary)"
-               value="{{current_product_summary.discount_percent}}">
+        <input ng-model="tempOrderDetail.discount_percent" type="number" step="5"
+               ng-disabled="currentProduct == null"
+               ng-change="change_product_summary_discount_percent(currentProduct)"
+               value="{{currentProduct.discount_percent}}">
         Tiền Mặt
-        <input ng-model="current_product_summary.discount_cash" type="number" step="100"
-               ng-disabled="productList.enable_input"
-               ng-change="change_product_summary_discount_cash(current_product_summary)"
-               value="{{current_product_summary.discount_cash}}">
+        <input ng-model="tempOrderDetail.discount_cash" type="number" step="100"
+               ng-disabled="currentProduct == null"
+               ng-change="change_product_summary_discount_cash(currentProduct)"
+               value="{{currentProduct.discount_cash}}">
         Tạm Tính
-        <input ng-model="current_product_summary.total_price" type="number" ng-disabled="true"
-               value="{{current_product_summary.total_price | currency}}">
+        <input ng-model="tempOrderDetail.total_price" type="number" ng-disabled="true">
         Tổng Tiền
-        <input ng-model="current_product_summary.final_price" type="number" ng-disabled="true"
-               value="{{current_product_summary.final_price | currency}}">
+        <input ng-model="tempOrderDetail.final_price" type="number" ng-disabled="true">
     </div>
 </div>
 <div class="row no-margin">
@@ -155,7 +161,7 @@
                          ng-change="productList.order_summary.money1 = productList.order_summary.money - productList.order_summary.temp_final_price"
                          ng-init="productList.order_summary.final_price = 0" />
     </div>
-  {{currentProduct}}
+  {{tempOrderDetail}}
 </div>
 
 

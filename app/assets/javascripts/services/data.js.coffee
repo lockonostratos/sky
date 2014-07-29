@@ -31,3 +31,11 @@ Sky.factory 'MerchantAccount', [ 'railsResourceFactory', (railsResourceFactory) 
 Sky.factory 'Customer', [ 'railsResourceFactory', (railsResourceFactory) ->
   railsResourceFactory { url: 'api/customers', name: 'customer' }
 ]
+
+Sky.factory 'TempOrder', [ 'railsResourceFactory', (railsResourceFactory) ->
+  railsResourceFactory { url: 'api/temp_orders', name: 'tempOrder' }
+]
+
+Sky.factory 'TempOrderDetail', [ 'railsResourceFactory', (railsResourceFactory) ->
+  railsResourceFactory { url: 'api/temp_order_details', name: 'tem_order_detail' }
+]

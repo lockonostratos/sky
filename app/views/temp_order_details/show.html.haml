@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Order:
+  = @temp_order_detail.order_id
+%p
+  %b Product:
+  = @temp_order_detail.product_id
+%p
+  %b Quality:
+  = @temp_order_detail.quality
+%p
+  %b Price:
+  = @temp_order_detail.price
+%p
+  %b Discount cash:
+  = @temp_order_detail.discount_cash
+%p
+  %b Discount percent:
+  = @temp_order_detail.discount_percent
+%p
+  %b Total amount:
+  = @temp_order_detail.total_amount
+
+= link_to 'Edit', edit_temp_order_detail_path(@temp_order_detail)
+\|
+= link_to 'Back', temp_order_details_path

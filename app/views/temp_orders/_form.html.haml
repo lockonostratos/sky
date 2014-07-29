@@ -1,0 +1,55 @@
+= form_for @temp_order do |f|
+  - if @temp_order.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@temp_order.errors.count, "error")} prohibited this temp_order from being saved:"
+      %ul
+        - @temp_order.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :branch_id
+    = f.number_field :branch_id
+  .field
+    = f.label :warehouse_id
+    = f.number_field :warehouse_id
+  .field
+    = f.label :customer_id
+    = f.number_field :customer_id
+  .field
+    = f.label :merchant_account_id
+    = f.number_field :merchant_account_id
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :return
+    = f.check_box :return
+  .field
+    = f.label :payment_method
+    = f.number_field :payment_method
+  .field
+    = f.label :delivery
+    = f.check_box :delivery
+  .field
+    = f.label :bill_discount
+    = f.check_box :bill_discount
+  .field
+    = f.label :total_price
+    = f.text_field :total_price
+  .field
+    = f.label :discount_voucher
+    = f.text_field :discount_voucher
+  .field
+    = f.label :discount_cash
+    = f.text_field :discount_cash
+  .field
+    = f.label :final_price
+    = f.text_field :final_price
+  .field
+    = f.label :deposit
+    = f.text_field :deposit
+  .field
+    = f.label :currency_debit
+    = f.text_field :currency_debit
+  .actions
+    = f.submit 'Save'

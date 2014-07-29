@@ -1,0 +1,31 @@
+= form_for @temp_order_detail do |f|
+  - if @temp_order_detail.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@temp_order_detail.errors.count, "error")} prohibited this temp_order_detail from being saved:"
+      %ul
+        - @temp_order_detail.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :order_id
+    = f.number_field :order_id
+  .field
+    = f.label :product_id
+    = f.number_field :product_id
+  .field
+    = f.label :quality
+    = f.number_field :quality
+  .field
+    = f.label :price
+    = f.number_field :price
+  .field
+    = f.label :discount_cash
+    = f.text_field :discount_cash
+  .field
+    = f.label :discount_percent
+    = f.text_field :discount_percent
+  .field
+    = f.label :total_amount
+    = f.text_field :total_amount
+  .actions
+    = f.submit 'Save'

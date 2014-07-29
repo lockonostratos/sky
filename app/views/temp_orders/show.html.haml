@@ -1,0 +1,51 @@
+%p#notice= notice
+
+%p
+  %b Branch:
+  = @temp_order.branch_id
+%p
+  %b Warehouse:
+  = @temp_order.warehouse_id
+%p
+  %b Customer:
+  = @temp_order.customer_id
+%p
+  %b Merchant account:
+  = @temp_order.merchant_account_id
+%p
+  %b Name:
+  = @temp_order.name
+%p
+  %b Return:
+  = @temp_order.return
+%p
+  %b Payment method:
+  = @temp_order.payment_method
+%p
+  %b Delivery:
+  = @temp_order.delivery
+%p
+  %b Bill discount:
+  = @temp_order.bill_discount
+%p
+  %b Total price:
+  = @temp_order.total_price
+%p
+  %b Discount voucher:
+  = @temp_order.discount_voucher
+%p
+  %b Discount cash:
+  = @temp_order.discount_cash
+%p
+  %b Final price:
+  = @temp_order.final_price
+%p
+  %b Deposit:
+  = @temp_order.deposit
+%p
+  %b Currency debit:
+  = @temp_order.currency_debit
+
+= link_to 'Edit', edit_temp_order_path(@temp_order)
+\|
+= link_to 'Back', temp_orders_path

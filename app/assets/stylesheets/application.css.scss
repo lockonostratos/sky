@@ -142,7 +142,7 @@ header {
 
 .left-side {
   position: fixed;
-  background: #253646;
+  background: #222A38;
   width: $left-pane;
   box-shadow: inset 4px 0 0 0 #191919;
   min-height: 100%;
@@ -181,10 +181,12 @@ header {
   margin: 0; padding: 0;
   > li {
     margin: 0; padding: 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
     > a {
       text-transform: uppercase;
       padding: 13px 15px;
       display: block;
+
       > i { width: 20px;
         @media only screen and (max-width : 992px) {
           @include collapse-transition;
@@ -194,7 +196,7 @@ header {
     }
     &.active > a, &:hover > a {
       color: #f6f6f6;
-      background: rgba(0,0,0,0.1);
+      background: rgba(0,0,0,0.5);
     }
     &.active > a { box-shadow: inset 4px 0 0 0 #f0ad4e; }
   }

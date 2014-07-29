@@ -13,7 +13,9 @@ Sky::Application.routes.draw do
     resources :products
     resources :product_summaries
     resources :orders
+    resources :temp_orders
     resources :order_details
+    resources :temp_order_details
     resources :deliveries
     resources :accounts
     get 'merchant_accounts/current_sales', :to => 'merchant_accounts#current_sales', as: 'current_sales'

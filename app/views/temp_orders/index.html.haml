@@ -1,0 +1,47 @@
+%h1 Listing temp_orders
+
+%table
+  %tr
+    %th Branch
+    %th Warehouse
+    %th Customer
+    %th Merchant account
+    %th Name
+    %th Return
+    %th Payment method
+    %th Delivery
+    %th Bill discount
+    %th Total price
+    %th Discount voucher
+    %th Discount cash
+    %th Final price
+    %th Deposit
+    %th Currency debit
+    %th
+    %th
+    %th
+
+  - @temp_orders.each do |temp_order|
+    %tr
+      %td= temp_order.branch_id
+      %td= temp_order.warehouse_id
+      %td= temp_order.customer_id
+      %td= temp_order.merchant_account_id
+      %td= temp_order.name
+      %td= temp_order.return
+      %td= temp_order.payment_method
+      %td= temp_order.delivery
+      %td= temp_order.bill_discount
+      %td= temp_order.total_price
+      %td= temp_order.discount_voucher
+      %td= temp_order.discount_cash
+      %td= temp_order.final_price
+      %td= temp_order.deposit
+      %td= temp_order.currency_debit
+      %td= link_to 'Show', temp_order
+      %td= link_to 'Edit', edit_temp_order_path(temp_order)
+      %td= link_to 'Destroy', temp_order, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Temp order', new_temp_order_path

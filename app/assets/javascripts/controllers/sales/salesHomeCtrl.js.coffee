@@ -1,11 +1,12 @@
-Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'ProductSummary', 'Customer', 'MerchantAccount',
-($scope, $routeParams, $http, Common, Product, ProductSummary, Customer, MerchantAccount) ->
+Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'ProductSummary', 'Customer', 'MerchantAccount', 'TempOrder'
+($scope, $routeParams, $http, Common, Product, ProductSummary, Customer, MerchantAccount, TempOrder) ->
 
   $scope.currentCustomer = {}
   $scope.customers = []
   Customer.query().then (data) ->
     $scope.customers = data
     $scope.currentCustomer = data[0]
+    $scope.tempOrder.customer_id =  $scope.currentCustomer.id
 
   $scope.currentAccount = {}
   $scope.sales_accounts = []
@@ -13,9 +14,30 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
     $scope.sales_accounts = data
     foundCurrent = Lazy($scope.sales_accounts).findWhere({accountId: Common.currentMerchantAccount.accountId})
     $scope.currentAccount = if foundCurrent then foundCurrent else $scope.sales_accounts[0]
+    #add tạm chổ này do ko biết chổ để hợp lý (lấy thông tin merchant_account_id, branch_id, warehouse_id)
+    $scope.tempOrder.merchant_account_id = $scope.currentAccount.accountId
+    $scope.tempOrder.branch_id = Common.currentMerchantAccount.branchId
+    $scope.tempOrder.warehouse_id = Common.currentMerchantAccount.currentWarehouseId
+
 
   $scope.productSummaryChange = ($item, $model, $label) ->
     $scope.currentProduct = $item
+    #add dữ liệu ban đầu cho tempOrderDetail
+    $scope.tempOrderDetail.order_id = $scope.tempOrder.id
+    $scope.tempOrderDetail.product_id = $scope.currentProduct.id
+    $scope.tempOrderDetail.price = $scope.currentProduct.price
+    $scope.tempOrderDetail.quality = 1
+    $scope.tempOrderDetail.discount_cash = 0
+    $scope.tempOrderDetail.discount_percent = 0
+    $scope.tempOrderDetail.total_price = $scope.currentProduct.price
+    $scope.tempOrderDetail.final_price = $scope.currentProduct.price
+    $scope.tempOrderDetail.total_amount = $scope.currentProduct.price
+
+  $scope.createTempOrder = ()->
+    tempOrder = Sky.gs('TempOrder')
+    tempOrder.$post('api/temp_orders', $scope.tempOrder)
+  TempOrder.query().then (data) ->
+    $scope.tempOrder = data[0]
 
   $scope.transports = [
     {
@@ -45,10 +67,25 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
       item.fullSearch = item.name
       item.fullSearch += ' (' + item.skullId + ')' if item.skullId
       $scope.product_summaries.push item
-#  $http.get("/api/product_summaries.json").success (data)->
-#    $scope.product_summaries = data
 
-  $scope.product = new ProductSummary()
+  #Tạo phiếu order tạm
+  $scope.tempOrder = {
+    branch_id: 0
+    warehouse_id: 0
+    merchant_account_id: 0
+    customer_id:0
+    payment_method: 0
+    delivery: 0
+    bill_discount: false
+    total_price: 0
+    discount_voucher: 0
+    discount_cash: 0
+    final_price: 0
+    deposit: 0
+    currency_debit: 0 }
+  $scope.tempOrderDetail = {}
+
+
 
   $scope.productList = {
     enable_input: true
@@ -72,7 +109,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
       money:0 #tiền nhận vào
       money1:0 #tiền thối lại
       voucher: 0 #giảm tiền theo voucher
-      bill_discount:false #giảm giá bill (0 theo từng sản phẩm, 1 theo tổng bill)
+      bill_discount:false #giảm giá bill (false theo từng sản phẩm, true theo tổng bill)
       discount_cash:0
       discount_percent_bill:0
       deposit:0
@@ -83,22 +120,21 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
     }
   }
   #cập nhật khi thay đổi người mua và người bán
-  $scope.change_currentAccount = (item)-> $scope.productList.order_summary.merchant_account = item
-  $scope.change_currentCustomer = (item)-> $scope.productList.order_summary.merchant_account = item
-  $scope.change_current_payment_method = (item)-> $scope.productList.order_summary.payment_method = item.id
-  $scope.change_current_delivery = (item)-> $scope.productList.order_summary.delivery = item.id
+  $scope.change_currentAccount = (item)-> $scope.tempOrder.merchant_account_id = item.accountId
+  $scope.change_currentCustomer = (item)-> $scope.tempOrder.customer_id = item.id
+  $scope.change_current_payment_method = (item)-> $scope.tempOrder.payment_method = item.id
+  $scope.change_current_delivery = (item)-> $scope.tempOrder.delivery = item.id
   $scope.disable_voucher = ->
     if $scope.productList.enable_input_bill == false and $scope.productList.order_summary.bill_discount == false
       $scope.productList.enable_input_voucher == false
     else
       $scope.productList.enable_input_voucher == true
+
   #cập nhật giá tiền khi thay đổi số lượng mua, giảm giá
-  $scope.change_product_summary_sale_quality = (item)-> calculation_change_product_summary_sale_quality(item)
-  $scope.change_product_summary_discount_percent = (item)-> calculation_change_product_summary_discount_percent(item)
-  $scope.change_product_summary_discount_cash = (item)-> calculation_change_product_summary_discount_cash(item)
+  $scope.change_tempOrderDetail_quality = (item)-> calculation_tempOrderDetail(item, true)
+
 
   #tạo dữ liệu và cập nhật hàng hóa vào bảng
-  $scope.change_product_summary = (item)-> calculation_change_product_summary(item)
   $scope.addProductSummary = (item, val) -> calculation_addProductSummary(item, val)
   $scope.removeProductSummary = (item, index) -> calculation_removeProductSummary(item, index)
   $scope.finishProductSummary = (item) -> calculation_finishProductSummary(item)
@@ -110,27 +146,30 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
   $scope.change_order_summary_bill_discount_cash = (item) -> calculation_change_order_summary_bill_discount_cash(item)
 
 
-  #add tạo thông số ban đầu khi chon sản phẩm
-  calculation_change_product_summary = (item)->
-    $scope.productList.order_summary.temp = 0
-    if $scope.product_summaries.indexOf(item) == -1
-      $scope.productList.enable_input = true
-    else
-      for items, index in $scope.productList.buy_product_list when items.id == item.id then $scope.productList.order_summary.temp += items.sale_quality
-      if $scope.productList.order_summary.temp == item.quality
-        $scope.productList.enable_input = true
-        item.sale_quality = 0
-        item.discount_cash = 0
-        item.discount_percent = 0
-        item.total_price = 0
-        item.final_price = 0
-      else
-        $scope.productList.enable_input = false
-        item.sale_quality = 1
-        item.discount_cash = 0
-        item.discount_percent = 0
-        item.total_price = item.sale_quality * item.price
-        item.final_price = item.sale_quality * item.price - item.discount_cash
+
+  #cập nhật số tiền khi số lượng mua thay đổi-------------------------------------------------------------------------->
+  calculation_tempOrderDetail = (item, boolean)->
+    $scope.tempOrderDetail.quality = calculation_item_min_max(item.quality, 1, 50)
+    $scope.tempOrderDetail.discount_cash = calculation_item_min_max(item.discount_cash, 0, 50)
+    $scope.tempOrderDetail.discount_percent = calculation_item_min_max(item.discount_percent, 1, 100)
+
+    $scope.tempOrderDetail.discount_cash = 0
+    $scope.tempOrderDetail.discount_percent = 0
+    $scope.tempOrderDetail.total_price = $scope.currentProduct.price
+    $scope.tempOrderDetail.final_price = $scope.currentProduct.price
+    $scope.tempOrderDetail.total_amount = $scope.currentProduct.price
+
+    item.total_price =  item.sale_quality * item.price
+    item.final_price = item.sale_quality * item.price - item.discount_cash
+    item.discount_percent = (item.discount_cash/item.total_price)*100
+
+
+
+  calculation_item_min_max = (item, min, max)->
+    if item == undefined || item == 0 || item == null then item = min
+    if item > max then item = max
+    return  item
+
 
   #add sản phẩm vào girdview------------------------------------------------------------------------------------------->
   calculation_addProductSummary = (item, val)->
@@ -197,20 +236,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
     #cập nhật vào tổng bill
     calculation_change_buy_product_list($scope.productList.order_summary.bill_discount)
 
-  #cập nhật số tiền khi số lượng mua thay đổi-------------------------------------------------------------------------->
-  calculation_change_product_summary_sale_quality= (item)->
-    $scope.productList.order_summary.temp = 0
-    for items in $scope.productList.buy_product_list when items.id == item.id then $scope.productList.order_summary.temp += items.sale_quality
-    if item.sale_quality == undefined || item.sale_quality == 0 || item.sale_quality == null then item.sale_quality = 1
-    if item.sale_quality >= (item.quality - $scope.productList.order_summary.temp) then item.sale_quality = (item.quality - $scope.productList.order_summary.temp)
-    if item.sale_quality > 0
-      item.total_price =  item.sale_quality * item.price
-      item.final_price = item.sale_quality * item.price - item.discount_cash
-      item.discount_percent = (item.discount_cash/item.total_price)*100
-    else
-      item.total_price =  0
-      item.final_price = 0
-      item.discount_percent = 0
+
 
   #cập nhật số tiền khi giảm giá phần trăm thay đổi
   calculation_change_product_summary_discount_percent = (item)->
@@ -278,7 +304,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
   calculation_finishProductSummary = (item)->
     a = Sky.gs('Order')
     a.$post('api/orders',item)
-#    a.get("",item)
+
 
 
   calculation_change_buy_product_list = (item)->
