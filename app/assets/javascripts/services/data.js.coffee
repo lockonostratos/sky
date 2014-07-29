@@ -37,5 +37,5 @@ Sky.factory 'TempOrder', [ 'railsResourceFactory', (railsResourceFactory) ->
 ]
 
 Sky.factory 'TempOrderDetail', [ 'railsResourceFactory', (railsResourceFactory) ->
-  railsResourceFactory { url: 'api/temp_order_details', name: 'tem_order_detail' }
+  railsResourceFactory { url: 'api/temp_order_details', name: 'temp_order_detail' }
 ]

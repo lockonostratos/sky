@@ -7,7 +7,7 @@ class TempOrderDetailsController < ApplicationController
     @temp_order_details = TempOrderDetail.all
     respond_to do |format|
       format.html { render layout: "account" }
-      format.json { render :json => @temp_order_details }
+      format.json { render :json => @temp_order_details, root: false }
     end
   end
 
@@ -73,6 +73,6 @@ class TempOrderDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def temp_order_detail_params
-      params.require(:temp_order_detail).permit(:order_id, :product_id, :quality, :price, :discount_cash, :discount_percent, :total_amount)
+      params.require(:temp_order_detail).permit(:order_id, :product_summary_id, :product_code, :skull_id, :warehouse_id, :quality, :price, :discount_cash, :discount_percent, :total_amount)
     end
 end

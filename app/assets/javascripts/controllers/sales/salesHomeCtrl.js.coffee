@@ -1,6 +1,5 @@
 Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'ProductSummary', 'Customer', 'MerchantAccount', 'TempOrder'
 ($scope, $routeParams, $http, Common, Product, ProductSummary, Customer, MerchantAccount, TempOrder) ->
-  Common.caption = 'bán hàng'
 
   $scope.currentCustomer = {}
   $scope.customers = []
@@ -22,23 +21,49 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
 
 
   $scope.productSummaryChange = ($item, $model, $label) ->
-    $scope.currentProduct = $item
+    $scope.tempOrderDetail = {}
+    $scope.currentProduct = angular.copy $item
     #add dữ liệu ban đầu cho tempOrderDetail
     $scope.tempOrderDetail.order_id = $scope.tempOrder.id
-    $scope.tempOrderDetail.product_id = $scope.currentProduct.id
+    $scope.tempOrderDetail.product_summary_id = $scope.currentProduct.id
+    $scope.tempOrderDetail.product_code = $scope.currentProduct.productCode
+    $scope.tempOrderDetail.skull_id = $scope.currentProduct.skullId
+    $scope.tempOrderDetail.warehouse_id = $scope.currentProduct.warehouseId
     $scope.tempOrderDetail.price = $scope.currentProduct.price
     $scope.tempOrderDetail.quality = 1
     $scope.tempOrderDetail.discount_cash = 0
     $scope.tempOrderDetail.discount_percent = 0
     $scope.tempOrderDetail.total_price = $scope.currentProduct.price
-    $scope.tempOrderDetail.final_price = $scope.currentProduct.price
     $scope.tempOrderDetail.total_amount = $scope.currentProduct.price
 
   $scope.createTempOrder = ()->
     tempOrder = Sky.gs('TempOrder')
     tempOrder.$post('api/temp_orders', $scope.tempOrder)
+
+  $scope.tempOrderDetailTabs = []
+  TempOrderDetail.query().then (data) ->
+    $scope.tempOrderDetailTabs = data
+
+  #Khởi tạo tab của order
+  $scope.tempOrderTabs = []
   TempOrder.query().then (data) ->
-    $scope.tempOrder = data[0]
+    $scope.tempOrderTabs = data
+    if $scope.tempOrderTabs[0] == undefined
+      tempOrder = Sky.gs('TempOrder')
+      tempOrder.$post('api/temp_orders', $scope.tempOrder)
+      TempOrder.query().then (data) ->
+        $scope.tempOrderTabs = data
+    else
+      $scope.tempOrderTabs = data
+
+
+  #chuyển đổi dữ liệu qua tab
+  $scope.select_order = (item)->
+    $scope.tempOrder = item
+    $scope.tempOrderDetails = []
+    for item in $scope.tempOrderDetailTabs when item.orderId == $scope.tempOrder.id then $scope.tempOrderDetails.push item
+
+
 
   $scope.transports = [
     {
@@ -62,6 +87,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
       name: "Nợ"
     }
   ]
+
   $scope.product_summaries = []
   ProductSummary.query().then (data) ->
     for item in data
@@ -75,6 +101,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
     warehouse_id: 0
     merchant_account_id: 0
     customer_id:0
+    name:'08/08/2014-001001'
     payment_method: 0
     delivery: 0
     bill_discount: false
@@ -84,7 +111,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
     final_price: 0
     deposit: 0
     currency_debit: 0 }
-  $scope.tempOrderDetail = {}
+
 
 
 
