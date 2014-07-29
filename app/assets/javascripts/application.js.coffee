@@ -20,6 +20,9 @@ Sky.config ['$routeProvider', ($routeProvider) ->
     }).when('/post/:postId',  {
       templateUrl: '../assets/home/post.html'
       controller: 'Sky.postCtrl'
+    }).when('/warehouse/import', {
+      templateUrl: '../assets/warehouse/import.html',
+      controller: 'Sky.importCtrl'
     }).otherwise( {
       templateUrl: '../assets/global/404.html'
     })

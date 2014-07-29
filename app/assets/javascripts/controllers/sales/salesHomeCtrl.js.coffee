@@ -1,5 +1,6 @@
 Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'ProductSummary', 'Customer', 'MerchantAccount', 'TempOrder'
 ($scope, $routeParams, $http, Common, Product, ProductSummary, Customer, MerchantAccount, TempOrder) ->
+  Common.caption = 'bán hàng'
 
   $scope.currentCustomer = {}
   $scope.customers = []

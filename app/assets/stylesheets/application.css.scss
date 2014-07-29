@@ -17,6 +17,7 @@ a { text-decoration: none !important; }
 
 body {
 //  @include center-gradial(#dad9d9, 100%);
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 @mixin collapse-transition ($duration: 0.25s) {
@@ -45,6 +46,11 @@ header {
     color: #fff;
     font-size: 20px;
 
+    .sidebar-toggle {
+      color: #fff;
+      float: right;
+    }
+
     @include collapse-transition();
     &.collapsed { @include logo-collapsed; }
 
@@ -60,9 +66,21 @@ header {
     margin-left: $left-pane;
     margin-bottom: 0;
     i, a { color: #5e5e5e; }
-    .sidebar-toggle { padding: 15px 15px 15px 5px; }
 
-  .dropdown.menu {
+    .home-nav {
+      padding: 4px 10px 0 5px;
+
+      &:hover { i {color: $lime;} }
+    }
+
+    .app-caption {
+      font-size: 20px;
+      padding-top: 10px;
+      display: inline-block;
+      text-transform: uppercase;
+    }
+
+    .dropdown.menu {
       a {
         position: relative;
         display: block;
@@ -114,8 +132,8 @@ header {
     }
     button[type=submit] {
       border: none;
-//      border-top: solid 1px #ddd;
-      border-left: solid 2px #ddd;
+      //border-top: solid 1px #ddd;
+      //border-right: solid 2px #ddd;
     }
   }
 }
@@ -142,9 +160,10 @@ header {
 
 .left-side {
   position: fixed;
-  background: #222A38;
+  background: #333;
   width: $left-pane;
   box-shadow: inset 4px 0 0 0 #191919;
+  border-right: solid 5px #ccc;
   min-height: 100%;
 
   @include collapse-transition();
@@ -181,7 +200,7 @@ header {
   margin: 0; padding: 0;
   > li {
     margin: 0; padding: 0;
-    border-bottom: 1px solid rgba(255,255,255,.05);
+//    border-bottom: 1px solid rgba(255,255,255,.05);
     > a {
       text-transform: uppercase;
       padding: 13px 15px;
@@ -196,8 +215,8 @@ header {
     }
     &.active > a, &:hover > a {
       color: #f6f6f6;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.1);
     }
-    &.active > a { box-shadow: inset 4px 0 0 0 #f0ad4e; }
+    &.active > a { box-shadow: inset 4px 0 0 0 $lime; }
   }
 }

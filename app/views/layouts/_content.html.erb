@@ -1,9 +1,9 @@
 <div class="wrapper">
   <div class="left-side" ng-class="{'collapsed': application.collapsedMode}">
-    <ul class="sidebar-menu" ng-repeat="item in application.navs">
-      <li ng-class="{active: application.currentUrl == item.url}">
+    <ul class="sidebar-menu">
+      <li ng-class="{active: application.currentUrl == item.url}" ng-repeat="item in application.navs">
         <a href="#{{item.url}}">
-          <i class="fa" ng-class="item.icon"></i>
+          <i ng-class="item.icon"></i>
           <span>{{item.title}}</span>
         </a>
       </li>
