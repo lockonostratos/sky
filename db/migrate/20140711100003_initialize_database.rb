@@ -481,7 +481,10 @@ class InitializeDatabase < ActiveRecord::Migration
     #Chi tiet don hang tạm ---------------------------------------->
     create_table :temp_order_details do |t|
       t.belongs_to :order, :null => false
-      t.belongs_to :product, :null => false
+      t.integer :product_summary_id, :null => false
+      t.string :product_code, :null => false
+      t.integer :skull_id, :null => false
+      t.integer :warehouse_id, :null => false
 
       t.integer :quality, :null => false
       t.decimal :price, :null => false
