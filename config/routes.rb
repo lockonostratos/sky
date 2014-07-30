@@ -10,6 +10,9 @@ Sky::Application.routes.draw do
     get 'current_user', :to => 'sessions#current_user', as: 'ca'
     resources :sessions
 
+    resources :temp_imports
+    resources :temp_import_details
+
     resources :products
     resources :product_summaries
     resources :orders

@@ -223,12 +223,37 @@ class InitializeDatabase < ActiveRecord::Migration
     create_table :imports do |t|
       t.belongs_to :warehouse, :null => false
       t.belongs_to :merchant_account, :null => false
+      t.integer :parent_export_id
+
       t.string :name
-      t.integer :export
       t.text :description, :null => false
 
       t.timestamps
     end
+
+    #Phieu nhap kho tạm------------------------------------------>
+    create_table :temp_imports do |t|
+      t.belongs_to :warehouse, :null => false
+      t.belongs_to :merchant_account, :null => false
+
+      t.string :name
+      t.text :description
+
+      t.timestamps
+    end
+
+    #Bảng tạm CHI TIẾT NHẬP KHO!--------------------------------->
+    create_table :temp_import_details do |t|
+      t.belongs_to :product_summary, :null => false
+      t.belongs_to :merchant_account, :null => false
+      t.belongs_to :provider
+
+      t.integer :import_quality, :default => 0 #so luong nhap
+      t.decimal :import_price, :presence => 15 #gia
+
+      t.timestamps
+    end
+
     #San pham------------------------------------------------>
     create_table :product_summaries do |t|
       t.string :product_code, :null => false
@@ -242,17 +267,7 @@ class InitializeDatabase < ActiveRecord::Migration
 
       t.timestamps
     end
-    #Bang CHI TIET san pham Bảng tạm!--------------------------------->
-    create_table :temp_products do |t|
-      t.belongs_to :product_summary, :null => false
-      t.belongs_to :merchant_account, :null => false
-      t.belongs_to :provider
 
-      t.integer :import_quality, :default => 0 #so luong nhap
-      t.decimal :import_price, :presence => 15 #gia
-
-      t.timestamps
-    end
     #Bang CHI TIET san pham!-------------------------------->
     create_table :products do |t|
       t.string :product_code, :null => false

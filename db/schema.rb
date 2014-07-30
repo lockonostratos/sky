@@ -211,8 +211,8 @@ ActiveRecord::Schema.define(version: 20140711100003) do
   create_table "imports", force: true do |t|
     t.integer  "warehouse_id",        null: false
     t.integer  "merchant_account_id", null: false
+    t.integer  "parent_export_id"
     t.string   "name"
-    t.integer  "export"
     t.text     "description",         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -569,6 +569,25 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.datetime "updated_at"
   end
 
+  create_table "temp_import_details", force: true do |t|
+    t.integer  "product_summary_id",                                       null: false
+    t.integer  "merchant_account_id",                                      null: false
+    t.integer  "provider_id"
+    t.integer  "import_quality",                               default: 0
+    t.decimal  "import_price",        precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "temp_imports", force: true do |t|
+    t.integer  "warehouse_id",        null: false
+    t.integer  "merchant_account_id", null: false
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "temp_inventory_details", force: true do |t|
     t.integer  "product_id",                       null: false
     t.integer  "inventory_id",                     null: false
@@ -608,16 +627,6 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.decimal  "final_price",         precision: 10, scale: 0, default: 0,     null: false
     t.decimal  "deposit",             precision: 10, scale: 0, default: 0,     null: false
     t.decimal  "currency_debit",      precision: 10, scale: 0, default: 0,     null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "temp_products", force: true do |t|
-    t.integer  "product_summary_id",                                       null: false
-    t.integer  "merchant_account_id",                                      null: false
-    t.integer  "provider_id"
-    t.integer  "import_quality",                               default: 0
-    t.decimal  "import_price",        precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -5,8 +5,12 @@
 #= require angular-animate
 #= require angularjs-rails-resource
 #= require ui-bootstrap
+#= require xeditable
+#= require moment
 
-window.Sky = angular.module 'Sky', ['ngRoute', 'rails', 'ui.bootstrap', 'ngAnimate']
+moment.lang 'vi'
+
+window.Sky = angular.module 'Sky', ['ngRoute', 'rails', 'ui.bootstrap', 'ngAnimate', 'xeditable']
 
 Sky.config ['$routeProvider', ($routeProvider) ->
   $routeProvider
@@ -27,5 +31,7 @@ Sky.config ['$routeProvider', ($routeProvider) ->
       templateUrl: '../assets/global/404.html'
     })
 ]
+
+Sky.run (editableOptions) -> editableOptions.theme = 'bs3'
 
 Sky.gs = (name) -> angular.element(document.body).injector().get(name)

@@ -163,6 +163,9 @@ Product.create({product_code:'1234567890067', merchant_account_id: loc_mer_acc.a
 Product.create({product_code:'1234567890068', merchant_account_id: loc_mer_acc.account_id, skull_id:skull_goi_200gr_56.id, provider_id: provider_hcm_q1.id, warehouse_id: new_import.warehouse_id, import_id:new_import.id, name:'Tankie4',  import_quality:500, available_quality:500, instock_quality:500, import_price:25000})
 Product.create({product_code:'1234567890069', merchant_account_id: loc_mer_acc.account_id, skull_id:skull_goi_800gr_25.id, provider_id: provider_hcm_q1.id, warehouse_id: new_import.warehouse_id, import_id:new_import.id, name:'VIỆT LONG ( Giá net )',  import_quality:500, available_quality:500, instock_quality:500, import_price:80000})
 
+sonTempImport = TempImport.create({warehouse_id: khoHcm.id, merchant_account_id: son_mer_acc.id, description: 'Nhập kho bổ sung đợt 2?'})
+TempImportDetail.create({product_summary_id: ProductSummary.find_by_product_code('1234567890038'), merchant_account_id: son_mer_acc.id, provider_id: provider_hcm_q1.id})
+
 
 importDT = Import.create({warehouse_id:khoDongThap.id, merchant_account_id:loc_mer_acc.id, name:'Nhập Kho Lần Đầu 2014', description:'Nhập Đầu Năm'})
 Product.create({product_code:'1234567890045', merchant_account_id: loc_mer_acc.account_id, skull_id:skull_goi_2kg_10.id, provider_id: provider_hcm_q1.id, warehouse_id: importDT.warehouse_id, import_id: importDT.id, name:'Tata 25WG',  import_quality:500, available_quality:500, instock_quality:500, import_price:11000})
