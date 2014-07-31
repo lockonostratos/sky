@@ -14,6 +14,14 @@ class TempOrderDetailsController < ApplicationController
   # GET /temp_order_details/1
   # GET /temp_order_details/1.json
   def show
+    respond_to do |format|
+      format.html { render layout: "account" }
+      format.json { render :json => @temp_order_detail, root: false }
+    end
+  end
+  def current_temp_order_details
+    @temp_orders = TempOrderDetail.where(order_id: params[:order_id])
+    render json: @temp_orders, :root => false
   end
 
   # GET /temp_order_details/new
@@ -33,7 +41,7 @@ class TempOrderDetailsController < ApplicationController
     respond_to do |format|
       if @temp_order_detail.save
         format.html { redirect_to @temp_order_detail, notice: 'Temp order detail was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @temp_order_detail }
+        format.json { render :json => @temp_order_detail, root: false, status: :created, location: @temp_order_detail }
       else
         format.html { render action: 'new' }
         format.json { render json: @temp_order_detail.errors, status: :unprocessable_entity }
@@ -47,7 +55,7 @@ class TempOrderDetailsController < ApplicationController
     respond_to do |format|
       if @temp_order_detail.update(temp_order_detail_params)
         format.html { redirect_to @temp_order_detail, notice: 'Temp order detail was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render :json => @temp_order_detail, root: false }
       else
         format.html { render action: 'edit' }
         format.json { render json: @temp_order_detail.errors, status: :unprocessable_entity }
@@ -73,6 +81,6 @@ class TempOrderDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def temp_order_detail_params
-      params.require(:temp_order_detail).permit(:order_id, :product_summary_id, :product_code, :skull_id, :warehouse_id, :quality, :price, :discount_cash, :discount_percent, :total_amount)
+      params.require(:temp_order_detail).permit(:order_id, :product_summary_id, :product_code, :skull_id, :warehouse_id, :quality, :price, :discount_cash, :discount_percent, :temp_discount_percent, :total_amount)
     end
 end

@@ -1,1 +1,1 @@
-json.extract! @temp_order_detail, :id, :order_id, :product_summary_id, :product_code, :skull_id, :warehouse_id, :quality, :price, :discount_cash, :discount_percent, :total_amount, :created_at, :updated_at
+json.extract! @temp_order_detail, :id, :order_id, :product_summary_id, :product_code, :skull_id, :warehouse_id, :quality, :price, :discount_cash, :discount_percent, :temp_discount_percent, :total_amount

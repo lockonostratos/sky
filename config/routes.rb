@@ -18,6 +18,7 @@ Sky::Application.routes.draw do
     resources :orders
     resources :temp_orders
     resources :order_details
+    get 'temp_order_details/current_temp_order_details', :to => 'temp_order_details#current_temp_order_details', as: 'current_temp_order_details'
     resources :temp_order_details
     resources :deliveries
     resources :accounts

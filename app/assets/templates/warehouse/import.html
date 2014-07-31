@@ -1,4 +1,4 @@
-<form class="well well-sm" editable-form name="importHeaders"  onaftersave="saveImportHeaders()">
+<form class="well well-sm" editable-form name="importHeaders"  onaftersave="importCtrl.saveImportHeaders()">
   <button type="button" class="lime btn btn-labeled" ng-click="importHeaders.$show()" ng-show="!importHeaders.$visible">
         <span class="btn-label">
           <i class="fa fa-pencil"></i>
@@ -26,7 +26,7 @@
     </button>
   </span>
 
-  <h6 class="color-asbestos" ng-show="!importHeaders.$visible">{{currentImport.createdAt | fromNow}}</h6>
+  <h6 class="color-asbestos" ng-show="!importHeaders.$visible">{{importCtrl.currentImport.createdAt | fromNow}}</h6>
 </form>
 
-<div dx-data-grid="dataGridOptions"></div>
+<div dx-data-grid="importCtrl.dataGridOptions"></div>

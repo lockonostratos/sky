@@ -16,8 +16,13 @@ class TempOrdersController < ApplicationController
   def show
     respond_to do |format|
       format.html { render layout: "account" }
-      format.json { render :json => @temp_orders }
+      format.json { render :json => @temp_order, root: false }
     end
+  end
+
+  def current_temp_order
+     # @temp_order = TempOrder.find(params[:id])
+     # render json: @temp_order, :root => false
   end
 
   # GET /temp_orders/new
@@ -25,7 +30,7 @@ class TempOrdersController < ApplicationController
     @temp_order = TempOrder.new
     respond_to do |format|
       format.html { render layout: "account" }
-      format.json { render :json => @temp_orders }
+      format.json { render :json => @temp_order, root: false }
     end
   end
 
@@ -41,9 +46,9 @@ class TempOrdersController < ApplicationController
     respond_to do |format|
       if @temp_order.save
         format.html { redirect_to @temp_order, notice: 'Temp order was successfully created.' }
-        format.json { render json: @temp_order, action: 'show', status: :created, location: @temp_order }
+        format.json { render json: @temp_order, root: false, action: 'show', status: :created, location: @temp_order }
       else
-        format.html { render action: 'new' }
+        format.html { render json: @temp_order, root: false }
         format.json { render json: @temp_order.errors, status: :unprocessable_entity }
       end
     end
@@ -55,7 +60,7 @@ class TempOrdersController < ApplicationController
     respond_to do |format|
       if @temp_order.update(temp_order_params)
         format.html { redirect_to @temp_order, notice: 'Temp order was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @temp_order }
       else
         format.html { render action: 'edit' }
         format.json { render json: @temp_order.errors, status: :unprocessable_entity }

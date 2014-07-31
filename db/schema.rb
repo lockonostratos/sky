@@ -600,16 +600,17 @@ ActiveRecord::Schema.define(version: 20140711100003) do
   end
 
   create_table "temp_order_details", force: true do |t|
-    t.integer  "order_id",                                                null: false
-    t.integer  "product_summary_id",                                      null: false
-    t.string   "product_code",                                            null: false
-    t.integer  "skull_id",                                                null: false
-    t.integer  "warehouse_id",                                            null: false
-    t.integer  "quality",                                                 null: false
-    t.decimal  "price",              precision: 10, scale: 0,             null: false
-    t.decimal  "discount_cash",      precision: 10, scale: 0, default: 0, null: false
-    t.decimal  "discount_percent",   precision: 10, scale: 0, default: 0, null: false
-    t.decimal  "total_amount",       precision: 10, scale: 0, default: 0, null: false
+    t.integer  "order_id",                                                   null: false
+    t.integer  "product_summary_id",                                         null: false
+    t.string   "product_code",                                               null: false
+    t.integer  "skull_id",                                                   null: false
+    t.integer  "warehouse_id",                                               null: false
+    t.integer  "quality",                                        default: 0, null: false
+    t.decimal  "price",                 precision: 10, scale: 0, default: 0, null: false
+    t.decimal  "discount_cash",         precision: 10, scale: 0, default: 0, null: false
+    t.decimal  "discount_percent",      precision: 10, scale: 0, default: 0, null: false
+    t.decimal  "temp_discount_percent", precision: 10, scale: 0, default: 0, null: false
+    t.decimal  "total_amount",          precision: 10, scale: 0, default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -621,10 +622,10 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.integer  "customer_id",                                                  null: false
     t.string   "name"
     t.boolean  "return",                                       default: false, null: false
-    t.integer  "payment_method",                                               null: false
+    t.integer  "payment_method",                               default: 0,     null: false
     t.boolean  "delivery",                                     default: false, null: false
-    t.boolean  "bill_discount",                                default: false
-    t.decimal  "total_price",         precision: 10, scale: 0,                 null: false
+    t.boolean  "bill_discount",                                default: false, null: false
+    t.decimal  "total_price",         precision: 10, scale: 0, default: 0,     null: false
     t.decimal  "discount_voucher",    precision: 10, scale: 0, default: 0,     null: false
     t.decimal  "discount_cash",       precision: 10, scale: 0, default: 0,     null: false
     t.decimal  "final_price",         precision: 10, scale: 0, default: 0,     null: false

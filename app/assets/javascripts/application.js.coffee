@@ -22,14 +22,15 @@ Sky.config ['$routeProvider', ($routeProvider) ->
       controller: 'Sky.indexCtrl'
     }).when('/sales', {
       templateUrl: '../assets/sales/home.html'
-      controller: 'Sky.salesHomeCtrl'
-      controllerAs: 'root'
+      controller: 'salesCtrl'
+      controllerAs: 'salesCtrl'
     }).when('/post/:postId',  {
       templateUrl: '../assets/home/post.html'
       controller: 'Sky.postCtrl'
     }).when('/warehouse/import', {
       templateUrl: '../assets/warehouse/import.html',
-      controller: 'Sky.importCtrl'
+      controller: 'importCtrl'
+      controllerAs: 'importCtrl'
     }).otherwise( {
       templateUrl: '../assets/global/404.html'
     })

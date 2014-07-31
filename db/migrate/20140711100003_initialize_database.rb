@@ -456,25 +456,25 @@ class InitializeDatabase < ActiveRecord::Migration
 
     #Don dat hang tạm-------------------------------------------->
     create_table :temp_orders do |t|
-      t.belongs_to :branch, :null => false                         #bán chi nhánh nào
-      t.belongs_to :warehouse, :null => false                      #bán cửa hàng nào
-      t.belongs_to :merchant_account, :null => false               #người bán
-      t.belongs_to :customer, :null => false                       #người mua
-      t.string :name                                               #tên phiếu order(tính lại khi cập nhật)
+      t.belongs_to :branch, :null => false                              #bán chi nhánh nào
+      t.belongs_to :warehouse, :null => false                           #bán cửa hàng nào
+      t.belongs_to :merchant_account, :null => false                    #người bán
+      t.belongs_to :customer, :null => false                            #người mua
+      t.string :name                                                    #tên phiếu order(tính lại khi cập nhật)
 
-      t.boolean :return, :null => false, :default => false         #Id don tra hang (neu co)
-      t.integer :payment_method, :null => false                    #cách thanh toán (tiền mặt, nợ)
-      t.boolean :delivery, :null => false, :default =>false         #phương thức vận chuyển(trực tiếp, giao hàng)
-                                                                   #true có giao hàng, false ko co giao hàng
-      t.boolean :bill_discount, :default => false                  #cách tích giảm giá hóa đơn,
-                                                                   #false tính theo từng sp, true tính theo tổng hóa đơn
-      t.decimal :total_price, :null => false                       #Tổng giá trị hóa đơn chưa giảm giá
-      t.decimal :discount_voucher, :null => false, :default => 0   #giam gia theo phiếu giảm giá
-      t.decimal :discount_cash, :null => false, :default => 0      #giam gia tinh bang tien mat
-      t.decimal :final_price, :null => false, :default=>0          #Tổng tiền còn lại khi trừ giảm giá.
+      t.boolean :return, :null => false, :default => false              #Id don tra hang (neu co)
+      t.integer :payment_method, :null => false, :default => 0          #cách thanh toán (tiền mặt, nợ)
+      t.boolean :delivery, :null => false, :default =>false             #phương thức vận chuyển(trực tiếp, giao hàng)
+                                                                        #true có giao hàng, false ko co giao hàng
+      t.boolean :bill_discount, :null => false, :default => false       #cách tích giảm giá hóa đơn,
+                                                                        #false tính theo từng sp, true tính theo tổng hóa đơn
+      t.decimal :total_price, :null => false, :default => 0             #Tổng giá trị hóa đơn chưa giảm giá
+      t.decimal :discount_voucher, :null => false, :default => 0        #giam gia theo phiếu giảm giá
+      t.decimal :discount_cash, :null => false, :default => 0           #giam gia tinh bang tien mat
+      t.decimal :final_price, :null => false, :default=>0               #Tổng tiền còn lại khi trừ giảm giá.
 
-      t.decimal :deposit, :null => false, :default=>0              #số tiền trả trước
-      t.decimal :currency_debit, :null => false, :default => 0     #số tiền còn nợ
+      t.decimal :deposit, :null => false, :default=>0                   #số tiền trả trước
+      t.decimal :currency_debit, :null => false, :default => 0          #số tiền còn nợ
 
       t.timestamps
     end
@@ -486,11 +486,12 @@ class InitializeDatabase < ActiveRecord::Migration
       t.integer :skull_id, :null => false
       t.integer :warehouse_id, :null => false
 
-      t.integer :quality, :null => false
-      t.decimal :price, :null => false
+      t.integer :quality, :null => false, :default => 0
+      t.decimal :price, :null => false, :default => 0
 
       t.decimal :discount_cash, :null => false, :default => 0
       t.decimal :discount_percent, :null => false, :default => 0
+      t.decimal :temp_discount_percent, :null => false, :default => 0
       t.decimal :total_amount, :null => false, :default => 0
 
       t.timestamps
