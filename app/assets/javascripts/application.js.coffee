@@ -1,16 +1,19 @@
-# require bootstrap-sprockets
-#= require lazy
+#= require jquery
+#= require globalize
 #= require angular
+#= require angular-sanitize
 #= require angular-route
 #= require angular-animate
 #= require angularjs-rails-resource
 #= require ui-bootstrap
+#= require sugar
 #= require xeditable
 #= require moment
+#= require dx.all
 
 moment.lang 'vi'
 
-window.Sky = angular.module 'Sky', ['ngRoute', 'rails', 'ui.bootstrap', 'ngAnimate', 'xeditable']
+window.Sky = angular.module 'Sky', ['ngRoute', 'rails', 'ui.bootstrap', 'ngAnimate', 'xeditable', 'dx']
 
 Sky.config ['$routeProvider', ($routeProvider) ->
   $routeProvider

@@ -51,7 +51,7 @@ Sky.salesHomeCtrl = ['$scope', '$routeParams','$http', 'Common', 'Product', 'Pro
   $scope.sales_accounts = []
   MerchantAccount.get('current_sales').then (data) ->
     $scope.sales_accounts = data
-    foundCurrent = Lazy($scope.sales_accounts).findWhere({accountId: Common.currentMerchantAccount.accountId})
+    foundCurrent = $scope.sales_accounts.find({accountId: Common.currentMerchantAccount.accountId})
     $scope.currentAccount = if foundCurrent then foundCurrent else $scope.sales_accounts[0]
     #add tạm chổ này do ko biết chổ để hợp lý (lấy thông tin merchant_account_id, branch_id, warehouse_id)
     #khi load lần đầu chưa có order, sẽ tự tạo order
