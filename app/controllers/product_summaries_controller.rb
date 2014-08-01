@@ -34,7 +34,7 @@ class ProductSummariesController < MerchantApplicationController
   def show
     respond_to do |format|
       format.html { render layout: "account" }
-      format.json {render json: @product_summary , :include => :skull}
+      format.json {render json: @product_summary, root: false}
     end
   end
 

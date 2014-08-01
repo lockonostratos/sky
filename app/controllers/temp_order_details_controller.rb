@@ -33,11 +33,37 @@ class TempOrderDetailsController < ApplicationController
   def edit
   end
 
+  def calculation_temp_order_detail
+    @temp_order_detail = temp_order_detail_params
+    old_order_detail = TempOrderDetail.find_by_order_id_and_product_summary_id_and_discount_percent(@temp_order_detail.order_id,
+                                                                                                    @temp_order_detail.product_summary_id,
+                                                                                                    @temp_order_detail.discount_percent)
+    if old_order_detail
+      old_order_detail.quality += @temp_order_detail.quality
+      old_order_detail.total_amount = old_order_detail.quality * old_order_detail.price
+      old_order_detail.discount_cash = (old_order_detail.discount_percent* old_order_detail.total_amount)/100
+      old_order_detail.total_amount -= old_order_detail.discount_cash
+      old_order_detail.save()
+    else
+      respond_to do |format|
+        if @temp_order_detail.save
+          format.html { }
+          format.json { render :json => @temp_order_detail, root: false}
+        else
+          format.html { }
+          format.json { render json: old_order_detail,  root: false}
+        end
+      end
+    end
+
+  end
+
+
+
   # POST /temp_order_details
   # POST /temp_order_details.json
   def create
     @temp_order_detail = TempOrderDetail.new(temp_order_detail_params)
-
     respond_to do |format|
       if @temp_order_detail.save
         format.html { redirect_to @temp_order_detail, notice: 'Temp order detail was successfully created.' }

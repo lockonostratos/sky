@@ -620,6 +620,7 @@ ActiveRecord::Schema.define(version: 20140711100003) do
     t.integer  "warehouse_id",                                                 null: false
     t.integer  "merchant_account_id",                                          null: false
     t.integer  "customer_id",                                                  null: false
+    t.integer  "sales_account_id",                                             null: false
     t.string   "name"
     t.boolean  "return",                                       default: false, null: false
     t.integer  "payment_method",                               default: 0,     null: false

@@ -1,4 +1,4 @@
-class TempOrdersController < ApplicationController
+class TempOrdersController < MerchantApplicationController
   before_action :set_temp_order, only: [:show, :edit, :update, :destroy]
 
   # GET /temp_orders
@@ -20,9 +20,11 @@ class TempOrdersController < ApplicationController
     end
   end
 
-  def current_temp_order
-     # @temp_order = TempOrder.find(params[:id])
-     # render json: @temp_order, :root => false
+  def histories
+    warehouse_id = if params[:warehouse_id] then params[:warehouse_id] else current_merchant_account.current_warehouse_id end
+    merchant_account_id = if params[:merchant_account_id] then params[:merchant_account_id] else current_merchant_account.account_id end
+    @temp_orders = TempOrder.where(warehouse_id: warehouse_id, merchant_account_id: merchant_account_id)
+    render json: @temp_orders, :root => false
   end
 
   # GET /temp_orders/new
@@ -86,6 +88,6 @@ class TempOrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def temp_order_params
-      params.require(:temp_order).permit(:branch_id, :warehouse_id, :customer_id, :merchant_account_id, :name, :return, :payment_method, :delivery, :bill_discount, :total_price, :discount_voucher, :discount_cash, :final_price, :deposit, :currency_debit)
+      params.require(:temp_order).permit(:branch_id, :warehouse_id, :customer_id, :merchant_account_id, :name, :return, :payment_method, :delivery, :bill_discount, :total_price, :discount_voucher, :discount_cash, :final_price, :deposit, :currency_debit, :sales_account_id)
     end
 end

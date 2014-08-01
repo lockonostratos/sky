@@ -458,8 +458,9 @@ class InitializeDatabase < ActiveRecord::Migration
     create_table :temp_orders do |t|
       t.belongs_to :branch, :null => false                              #bán chi nhánh nào
       t.belongs_to :warehouse, :null => false                           #bán cửa hàng nào
-      t.belongs_to :merchant_account, :null => false                    #người bán
+      t.belongs_to :merchant_account, :null => false                    #người tạo
       t.belongs_to :customer, :null => false                            #người mua
+      t.integer :sales_account_id, :null =>false                        #người bán
       t.string :name                                                    #tên phiếu order(tính lại khi cập nhật)
 
       t.boolean :return, :null => false, :default => false              #Id don tra hang (neu co)

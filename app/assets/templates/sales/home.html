@@ -9,14 +9,14 @@
                         ng-change="salesCtrl.changeCurrentOrderOwnerId()"></select>
             </div>
             <div class="col-lg-3">
-                <input type="text" ng-model="currentLabel" typeahead="ps.fullSearch for ps in salesCtrl.product_summaries | filter:$viewValue | limitTo:8"
+                <input type="text" ng-model="salesCtrl.currentLabel" typeahead="ps.fullSearch for ps in salesCtrl.product_summaries | filter:$viewValue | limitTo:8"
                        typeahead-on-select="salesCtrl.resetCurrentOrderDetail($item, $model, $label)" />
                 <input ng-model="currentProduct" type="button" value="Thêm(next)"
-                       ng-click="salesCtrl.addNewOrderDetail(salesCtrl.currentOrderDetail)" ng-disabled="salesCtrl.currentProduct == null"/>
+                       ng-click="salesCtrl.addNewOrderDetail()" ng-disabled="salesCtrl.currentProduct == null"/>
             </div>
             <div class="col-lg-6">
                 <input ng-model="salesCtrl.currentOrderDetail.quality" type="number" min="0" ng-disabled="salesCtrl.currentProduct == null"
-                       ng-change="salesCtrl.changeCurrentOrderDetailQuality(salesCtrl.currentOrderDetail)">
+                       ng-change="salesCtrl.changeCurrentOrderDetailQuality()">
                 <input ng-disabled="true" value='{{salesCtrl.currentProduct.name}} - {{salesCtrl.currentProduct.productCode}}'>
                 <input ng-disabled="true" value='SL:{{salesCtrl.currentProduct.quality}} - {{salesCtrl.currentProduct.price | currency}}'>
 
@@ -36,11 +36,11 @@
                 GiảmGiá%
                 <input ng-model="salesCtrl.currentOrderDetail.discount_percent" type="number" step="5"
                        ng-disabled="salesCtrl.currentProduct == null"
-                       ng-change="salesCtrl.change_tempOrderDetail_discount_percent(salesCtrl.currentOrderDetail)">
+                       ng-change="salesCtrl.change_tempOrderDetail_discount_percent()">
                 Tiền Mặt
                 <input ng-model="salesCtrl.currentOrderDetail.discount_cash" min="0" type="number" step="100"
                        ng-disabled="salesCtrl.currentProduct == null"
-                       ng-change="salesCtrl.change_tempOrderDetail_discount_cash(salesCtrl.currentOrderDetail)">
+                       ng-change="salesCtrl.change_tempOrderDetail_discount_cash()">
                 Tạm Tính
                 <input ng-model="salesCtrl.currentOrderDetail.total_price" type="number" ng-disabled="true">
                 Tổng Tiền
@@ -111,14 +111,14 @@
             <div class="col-lg-3">
                 Giảm Giá Tiền Theo Tổng Bill :
                 <input type="checkbox" ng-model="salesCtrl.tempOrder.billDiscount" ng-disabled="salesCtrl.tempOrderDetails[0] == null"
-                       ng-change="salesCtrl.change_cheked_bill(salesCtrl.tempOrder.billDiscount)"/>
+                       ng-change="salesCtrl.change_cheked_bill()"/>
                 <input ng-model="salesCtrl.productList" type="button" value="Cập Nhật" ng-disabled="salesCtrl.tempOrderDetails[0] == null" ng-click="salesCtrl.reupdate_order()"/>
                 <input ng-model="salesCtrl.productList" type="button" value="Hoàn Tất" ng-disabled="salesCtrl.tempOrderDetails[0] == null" />
 
             </div>
             <div class="col-lg-2">
                 Giảm Giá %<input ng-model="salesCtrl.tempOrder.discountPercent" type="number" ng-disabled="!salesCtrl.tempOrder.billDiscount"
-                                 ng-change="salesCtrl.change_tempOrder_discount_percent(tempOrder)"/>
+                                 ng-change="salesCtrl.change_tempOrder_discount_percent()"/>
             </div>
             <div class="col-lg-2">
                 Giảm Giá TM <input ng-model="salesCtrl.tempOrder.discountCash" type="number" ng-disabled="!salesCtrl.tempOrder.billDiscount"
@@ -127,15 +127,9 @@
             <div class="col-lg-2">
                 Tổng Tiền <input ng-model="salesCtrl.tempOrder.finalPrice" ng-disabled="true"/>
             </div>
+            {{salesCtrl.tempOrderDetails}}<br>
+            {{salesCtrl.current}}
         </div>
-
-        <br>
-        <br>
-
-        {{tempOrder}}
-        {{currentCustomer}}
-
-
     </tab>
 
 </tabset>
